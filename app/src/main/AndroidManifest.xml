@@ -13,12 +13,22 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".lsl.activity.LoginActivity"
+                  android:label="登录页面"
+                  android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".lsl.activity.RegisterActivity"
+                  android:label="用户注册页面"
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

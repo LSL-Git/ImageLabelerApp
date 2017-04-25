@@ -1,4 +1,4 @@
-package app.com.lsl.imagelabelerapp.lsl.CreateTable;
+package app.com.lsl.imagelabelerapp.lsl.createtable;
 
 /** 用户信息表模型
  * Created by M1308_000 on 2017/4/17.
