@@ -1,6 +1,8 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +21,12 @@ import app.com.lsl.imagelabelerapp.MainActivity;
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
 
+
 /** 用户登录页面
  * Created by M1308_000 on 2017/4/25.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
     private Button but_login;
     private EditText et_user_psw;
@@ -30,6 +34,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox cb_is_remeber_psw;
     private Button but_to_register;
     private TextView tv_show_login_msg;
+    private CheckBox cb_auto_login;
+    private SharedPreferences spf;
+    private String user_name;
+    private String user_psw;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,12 +46,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 加载控件
         initLayout();
 
+        spf = getSharedPreferences("UserInfo", Context.MODE_WORLD_READABLE);
+
+        // 判断记住密码多选框的状态
+        if (spf.getBoolean("IS_REMEMBER",false)) {
+            // 设置默认是记住密码状态
+            cb_is_remeber_psw.setChecked(true);
+            et_user_name.setText(spf.getString("USER_NAME",""));
+            et_user_psw.setText(spf.getString("PASSWORD",""));
+            // 判断自动登录状态
+            if (spf.getBoolean("AUTO_LOGIN", false)) {
+                // 设置默认是自动登录
+                cb_auto_login.setChecked(true);
+
+                user_name = et_user_name.getText().toString().toString();
+                user_psw = et_user_psw.getText().toString().trim();
+                tv_show_login_msg.setText("登录中...");
+                // 启动登录线程
+                new Thread(thread).start();
+            }
+        }
+
     }
 
     private void initLayout() {
         but_login = (Button) findViewById(R.id.but_login);
         but_to_register = (Button) findViewById(R.id.but_to_register);
         cb_is_remeber_psw = (CheckBox) findViewById(R.id.cb_login_remember_psw);
+        cb_auto_login = (CheckBox) findViewById(R.id.cb_auto_login);
         et_user_name = (EditText) findViewById(R.id.et_login_user_name);
         et_user_psw = (EditText) findViewById(R.id.et_login_user_psw);
         tv_show_login_msg = (TextView) findViewById(R.id.tv_show_msg_login);
@@ -51,35 +81,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         but_login.setOnClickListener(this);
         but_to_register.setOnClickListener(this);
 
+        cb_is_remeber_psw.setOnCheckedChangeListener(this);
+        cb_auto_login.setOnCheckedChangeListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.but_login:
-                final String user_name = et_user_name.getText().toString().trim();
-                final String user_psw = et_user_psw.getText().toString().trim();
+                user_name = et_user_name.getText().toString().trim();
+                user_psw = et_user_psw.getText().toString().trim();
 
                 if (user_name.isEmpty() || user_psw.isEmpty()) {
                     Toast.makeText(this,"用户名或密码不能为空！",Toast.LENGTH_SHORT).show();
                 } else {
                     tv_show_login_msg.setText("登录中...");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String result = LoginTask.Login(user_name, user_psw);
-                            Log.e("LoginTask",result);
-                            Message msg = new Message();
-                            if (result.equals("Login_Success")) {
-                                msg.arg1 = 1;
-                            } else if (result.equals("Psw_Err")){
-                                msg.arg1 = 2;
-                            } else if (result.equals("User_Not_Exist")) {
-                                msg.arg1 = 3;
-                            }
-                            handler.sendMessage(msg);
-                        }
-                    }).start();
+                    // 启动登录线程
+                    new Thread(thread).start();
 
                 }
                 break;
@@ -90,6 +109,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+    // 登录线程
+    Thread thread = new Thread(new Runnable() {
+
+        @Override
+        public void run() {
+            String result = LoginTask.Login(user_name, user_psw);
+            Log.e("LoginTask",result);
+            Message msg = new Message();
+            // 登录成功
+            if (result.equals("Login_Success")) {
+                msg.arg1 = 1;
+                // 记住用户名和密码
+                if (cb_is_remeber_psw.isChecked()) {
+                    SharedPreferences.Editor editor = spf.edit();
+                    editor.putString("USER_NAME", user_name);
+                    editor.putString("PASSWORD", user_psw);
+                    editor.commit();
+                }
+                // 密码错误
+            } else if (result.equals("Psw_Err")){
+                msg.arg1 = 2;
+                // 用户不存在
+            } else if (result.equals("User_Not_Exist")) {
+                msg.arg1 = 3;
+            } else {
+                msg.arg1 = 4;
+            }
+            handler.sendMessage(msg);
+        }
+    });
+
 
     Handler handler = new Handler() {
         @Override
@@ -109,9 +160,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 case 3:
                     tv_show_login_msg.setText("用户不存在！");
                     break;
+                case 4:
+                    tv_show_login_msg.setText("登录失败！");
+                    break;
             }
-
         }
     };
 
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.cb_login_remember_psw:
+                if (cb_is_remeber_psw.isChecked()) {
+                    Log.e("LoginActivity","记住密码已选中");
+                    spf.edit().putBoolean("IS_REMEMBER", true).commit();
+                } else {
+                    Log.e("LoginActivity","记住密码没选中");
+                    spf.edit().putBoolean("IS_REMEMBER", false).commit();
+                }
+                break;
+
+            case R.id.cb_auto_login:
+                if (cb_auto_login.isChecked()) {
+                    Log.e("LoginActivity","自动登录已选中");
+                    spf.edit().putBoolean("AUTO_LOGIN", true).commit();
+                } else {
+                    Log.e("LoginActivity","自动登录没选中");
+                    spf.edit().putBoolean("AUTO_LOGIN", false).commit();
+                }
+                break;
+        }
+
+    }
 }

@@ -14,7 +14,7 @@ public class LoginTask {
     private static String TYPE = "login";
 
     public static String Login(String name, String psw) {
-        String Result = "Login_Fail";
+        String Result;
 
         Map<String,String> map = new HashMap<>();
         map.put("type",TYPE);
@@ -23,6 +23,10 @@ public class LoginTask {
 
         Result = ServerUtil.Server(map);
 
+        if (Result == null)
+            Result = "Login_Fail";
+
         return Result;
     }
+
 }
