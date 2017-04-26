@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".lsl.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -32,6 +32,11 @@
         <activity android:name=".lsl.activity.RegisterActivity"
                   android:label="用户注册页面"
                   android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.UserInfoActivity"
+                  android:label="用户信息查询修改页面"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

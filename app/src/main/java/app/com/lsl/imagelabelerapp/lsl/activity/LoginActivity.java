@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import app.com.lsl.imagelabelerapp.MainActivity;
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
 
@@ -62,8 +61,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 user_name = et_user_name.getText().toString().toString();
                 user_psw = et_user_psw.getText().toString().trim();
                 tv_show_login_msg.setText("登录中...");
-                // 启动登录线程
-                new Thread(thread).start();
+//                // 启动登录线程
+//                new Thread(thread).start();
+
+                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
             }
         }
 

@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="app.com.lsl.imagelabelerapp.MainActivity"
+    tools:context="app.com.lsl.imagelabelerapp.lsl.activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <TextView
