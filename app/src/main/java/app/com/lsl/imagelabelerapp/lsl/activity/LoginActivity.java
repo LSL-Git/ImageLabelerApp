@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
+import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
 
 
@@ -25,7 +25,7 @@ import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
  * Created by M1308_000 on 2017/4/25.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, UserView{
 
     private Button but_login;
     private EditText et_user_psw;
@@ -60,13 +60,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 user_name = et_user_name.getText().toString().toString();
                 user_psw = et_user_psw.getText().toString().trim();
-                tv_show_login_msg.setText("登录中...");
-//                // 启动登录线程
-//                new Thread(thread).start();
 
-                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent1);
-                finish();
+                 // 启动登录线程
+                //LoginTask.Login(user_name,user_psw);
+
+//                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent1);
+//                finish();
             }
         }
 
@@ -99,9 +99,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (user_name.isEmpty() || user_psw.isEmpty()) {
                     Toast.makeText(this,"用户名或密码不能为空！",Toast.LENGTH_SHORT).show();
                 } else {
-                    tv_show_login_msg.setText("登录中...");
-                    // 启动登录线程
-                    new Thread(thread).start();
+                    // 启动登录业务
+                    new UserPresenter(this,LoginTask.Login(user_name,user_psw), LoginTask.getTYPE()).fetch();
 
                 }
                 break;
@@ -109,67 +108,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.but_to_register:
                 Intent intent2 = new Intent(this,RegisterActivity.class);
                 startActivity(intent2);
+
                 break;
         }
     }
 
-    // 登录线程
-    Thread thread = new Thread(new Runnable() {
-
-        @Override
-        public void run() {
-            String result = LoginTask.Login(user_name, user_psw);
-            Log.e("LoginTask",result);
-            Message msg = new Message();
-            // 登录成功
-            if (result.equals("Login_Success")) {
-                msg.arg1 = 1;
-                // 记住用户名和密码
-                if (cb_is_remeber_psw.isChecked()) {
-                    SharedPreferences.Editor editor = spf.edit();
-                    editor.putString("USER_NAME", user_name);
-                    editor.putString("PASSWORD", user_psw);
-                    editor.commit();
-                }
-                // 密码错误
-            } else if (result.equals("Psw_Err")){
-                msg.arg1 = 2;
-                // 用户不存在
-            } else if (result.equals("User_Not_Exist")) {
-                msg.arg1 = 3;
-            } else {
-                msg.arg1 = 4;
-            }
-            handler.sendMessage(msg);
-        }
-    });
-
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            // 信息为1则登录成功 否则 登录失败
-            switch (msg.arg1) {
-                case 1:
-                    // 登录成功，跳转到主页
-                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent1);
-                    finish();
-                    break;
-                case 2:
-                    tv_show_login_msg.setText("密码错误！");
-                    break;
-                case 3:
-                    tv_show_login_msg.setText("用户不存在！");
-                    break;
-                case 4:
-                    tv_show_login_msg.setText("登录失败！");
-                    break;
-            }
-        }
-    };
-
+//    int code;
+//    Thread thread = new Thread(new Runnable() {
+//        @Override
+//        public void run() {
+//            try {
+//                Log.e("run", "run...");
+//                URL url = new URL("http://192.168.1.101/webServer/login?login_psw=1145&login_name=egggr");
+//                // 获取连接
+//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//                // 设置请求方式
+//                httpURLConnection.setRequestMethod("POST");
+//                // 设置连接超时为5秒
+//                httpURLConnection.setConnectTimeout(5000);
+//                Log.e("HttpUtils", httpURLConnection + "");
+//                code = httpURLConnection.getResponseCode();
+//
+//                Log.e("HttpUtils", "code:" + code);
+//                if (code == 200) {
+//
+//
+//                }
+//            }catch (Exception e)  {
+//                e.printStackTrace();
+//            }
+//        }
+//    });
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -196,4 +165,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
+
+    @Override
+    public void ShowLoading() {
+        tv_show_login_msg.setText("登录中...");
+    }
+
+    @Override
+    public void ShowBackMsg(Object obj) {
+        String RESULT = obj.toString();
+
+        if (RESULT.equals("Login_Success")) { // 登录成功
+            // 记住用户名和密码
+            if (cb_is_remeber_psw.isChecked()) {
+                SharedPreferences.Editor editor = spf.edit();
+                editor.putString("USER_NAME", user_name);
+                editor.putString("PASSWORD", user_psw);
+                editor.commit();
+            }
+
+            // 登录成功，跳转到主页面
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            finish();
+
+        } else if (RESULT.equals("Psw_Err")){// 密码错误
+            tv_show_login_msg.setText("密码错误");
+        } else if (RESULT.equals("User_Not_Exist")) {// 用户不存在
+            tv_show_login_msg.setText("用户名不存在.");
+        } else if (RESULT.equals("Login_Fail")){    // 登录失败
+            tv_show_login_msg.setText("登录失败");
+        }
+    }
+
 }

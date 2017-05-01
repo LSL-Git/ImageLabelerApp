@@ -1,11 +1,8 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
+import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
+import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.RegisterTask;
 
 /** 用户注册页面
  * Created by M1308_000 on 2017/4/25.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, UserView {
 
     private Button but_register;
     private Button but_cancel;
@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppAcitivities.addActivity(this);
         setContentView(R.layout.activity_register);
         // 加载控件
         initLayout();
@@ -67,19 +68,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else if (!new_user_psw.equals(user_rpsw)) {
                     tv_show_msg.setText("两次密码输入不相同!");
                 } else {
-                    tv_show_msg.setText("注册中...");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String result = "";
-                            result = RegisterTask.Register(new_user_name,user_tel,icon_path,user_rpsw);
-                            Log.e("RegisterActivity","执行注册返回结果：" + result);
+//                    tv_show_msg.setText("注册中...");
+//                    RegisterTask.Register(new_user_name, user_tel, new_user_psw);
 
-                            Message msg = new Message();
-                            msg.obj = result;
-                            handler.sendMessage(msg);
-                        }
-                    }).start();
+                    // 启动注册业务
+                    new UserPresenter(this, RegisterTask.Register(new_user_name, user_tel,
+                            new_user_psw), RegisterTask.getType()).fetch();
+
                 }
                 break;
             case R.id.but_cancel:
@@ -88,23 +83,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    /**
-     *  将注册结果显示到UI
-     */
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            String Re = msg.obj.toString();
-            if (Re.equals("User_Exist")) {
-                tv_show_msg.setText("用户名已存在！");
-            } else if (Re.equals("Register_Success")) {
-                tv_show_msg.setText("注册成功！");
-                Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_LONG).show();
-                finish();
-            } else {
-                tv_show_msg.setText("注册失败！");
-            }
+
+    @Override
+    public void ShowLoading() {
+        tv_show_msg.setText("注册中...");
+    }
+
+    @Override
+    public void ShowBackMsg(Object obj) {
+        // 获取返回值
+        String result = obj.toString();
+
+        if (result.equals("User_Name_Exist")) {  // 用户名已存在
+            tv_show_msg.setText("用户名已存在");
+        } else if (result.equals("Register_Success")) { // 注册成功
+            // 注册成功。跳转到登录页面
+            finish();
+            Toast.makeText(MyApplication.getContext(),"注册成功", Toast.LENGTH_SHORT).show();
+        } else {    // 注册失败
+            tv_show_msg.setText("注册失败");
         }
-    };
+    }
 }
