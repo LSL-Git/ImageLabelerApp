@@ -13,50 +13,64 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:id="@+id/iv_info_icon"
         android:layout_marginTop="10sp"
         app:srcCompat="@android:drawable/sym_def_app_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginTop="5sp"
-        android:text="用户名"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_marginTop="5sp"
-        android:text="电话号码"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_userinfo_name"
+            android:layout_marginTop="5sp"
+            android:text="用户名"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginTop="5sp"
-        android:text="邮箱"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_userinfo_tel"
+            android:layout_marginTop="5sp"
+            android:text="电话号码"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginTop="5sp"
-        android:text="积分"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_userinfo_email"
+            android:layout_marginTop="5sp"
+            android:text="邮箱"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_marginTop="5sp"
-        android:text="任务完成情况"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_userinfo_integral"
+            android:layout_marginTop="5sp"
+            android:text="积分"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_userinfo_task"
+            android:layout_marginTop="5sp"
+            android:text="任务完成情况"
+            android:gravity="left"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginTop="20sp"

@@ -1,5 +1,7 @@
 package app.com.lsl.imagelabelerapp.lsl.base;
 
+import android.util.Log;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -66,7 +68,7 @@ public class Base64Image {
             outputStream.close();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Base64Image",e.getMessage());
             return false;
         }
 

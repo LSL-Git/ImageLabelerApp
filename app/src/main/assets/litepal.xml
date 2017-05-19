@@ -3,7 +3,9 @@
     <dbname value="UserDb"></dbname>
     <version value="1"></version>
 
+
     <list>
         <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.UserTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.ImageURLTable"></mapping>
     </list>
 </litepal>

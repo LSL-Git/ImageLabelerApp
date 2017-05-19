@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import app.com.lsl.imagelabelerapp.R;
-import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.RegisterTask;
+import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 /** 用户注册页面
  * Created by M1308_000 on 2017/4/25.
@@ -68,8 +70,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else if (!new_user_psw.equals(user_rpsw)) {
                     tv_show_msg.setText("两次密码输入不相同!");
                 } else {
-//                    tv_show_msg.setText("注册中...");
-//                    RegisterTask.Register(new_user_name, user_tel, new_user_psw);
 
                     // 启动注册业务
                     new UserPresenter(this, RegisterTask.Register(new_user_name, user_tel,
@@ -92,14 +92,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void ShowBackMsg(Object obj) {
         // 获取返回值
-        String result = obj.toString();
+        String result = "";
+        try {
+            result = JsonUtils.LoginAndRegisterJson(obj.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         if (result.equals("User_Name_Exist")) {  // 用户名已存在
             tv_show_msg.setText("用户名已存在");
         } else if (result.equals("Register_Success")) { // 注册成功
             // 注册成功。跳转到登录页面
             finish();
-            Toast.makeText(MyApplication.getContext(),"注册成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this,"注册成功", Toast.LENGTH_SHORT).show();
         } else {    // 注册失败
             tv_show_msg.setText("注册失败");
         }

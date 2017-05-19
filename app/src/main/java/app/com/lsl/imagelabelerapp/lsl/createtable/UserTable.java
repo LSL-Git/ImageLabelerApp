@@ -1,10 +1,12 @@
 package app.com.lsl.imagelabelerapp.lsl.createtable;
 
+import org.litepal.crud.DataSupport;
+
 /** 用户信息表模型
  * Created by M1308_000 on 2017/4/17.
  */
 
-public class UserTable {
+public class UserTable extends DataSupport{
 
     private int user_id; // 用户id
 

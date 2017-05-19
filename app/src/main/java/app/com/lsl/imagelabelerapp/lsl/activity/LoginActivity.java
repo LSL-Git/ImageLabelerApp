@@ -15,17 +15,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
+import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 
 /** 用户登录页面
  * Created by M1308_000 on 2017/4/25.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, UserView{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener, UserView{
 
     private Button but_login;
     private EditText et_user_psw;
@@ -62,11 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 user_psw = et_user_psw.getText().toString().trim();
 
                  // 启动登录线程
-                //LoginTask.Login(user_name,user_psw);
-
-//                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent1);
-//                finish();
+                new UserPresenter(this,LoginTask.Login(spf.getString("USER_NAME",""),spf.getString("PASSWORD","")), LoginTask.getTYPE()).fetch();
             }
         }
 
@@ -108,37 +108,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.but_to_register:
                 Intent intent2 = new Intent(this,RegisterActivity.class);
                 startActivity(intent2);
-
                 break;
         }
     }
 
-//    int code;
-//    Thread thread = new Thread(new Runnable() {
-//        @Override
-//        public void run() {
-//            try {
-//                Log.e("run", "run...");
-//                URL url = new URL("http://192.168.1.101/webServer/login?login_psw=1145&login_name=egggr");
-//                // 获取连接
-//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                // 设置请求方式
-//                httpURLConnection.setRequestMethod("POST");
-//                // 设置连接超时为5秒
-//                httpURLConnection.setConnectTimeout(5000);
-//                Log.e("HttpUtils", httpURLConnection + "");
-//                code = httpURLConnection.getResponseCode();
-//
-//                Log.e("HttpUtils", "code:" + code);
-//                if (code == 200) {
-//
-//
-//                }
-//            }catch (Exception e)  {
-//                e.printStackTrace();
-//            }
-//        }
-//    });
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -174,7 +147,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void ShowBackMsg(Object obj) {
-        String RESULT = obj.toString();
+        String RESULT = "";
+        try {
+            RESULT = JsonUtils.LoginAndRegisterJson(obj.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         if (RESULT.equals("Login_Success")) { // 登录成功
             // 记住用户名和密码
@@ -187,6 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             // 登录成功，跳转到主页面
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("user_name",user_name);
             this.startActivity(intent);
             finish();
 
@@ -194,7 +173,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             tv_show_login_msg.setText("密码错误");
         } else if (RESULT.equals("User_Not_Exist")) {// 用户不存在
             tv_show_login_msg.setText("用户名不存在.");
-        } else if (RESULT.equals("Login_Fail")){    // 登录失败
+        } else {    // 登录失败
             tv_show_login_msg.setText("登录失败");
         }
     }
