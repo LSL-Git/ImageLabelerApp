@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -18,16 +19,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
+import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
-import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.*;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.SPF_USERALLINFO;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_EMAIL;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_ICON;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_INTEGRAL;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_NAME;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_TASK_COMPLETION;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_TEL;
 
 /** 查看用户信息和修改用户信息页面
  * Created by M1308_000 on 2017/4/26.
  */
 
-public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener, UserView {
 
     private Button but_info_save;
     private Button but_cancel;
@@ -64,8 +80,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
         if (spf != null) {
             tv_info_name.setText("昵称   " + spf.getString(USER_NAME, ""));
-            tv_info_tel.setText("电话   " + spf.getString(USER_TEL, ""));
-            tv_info_email.setText("邮箱   " + spf.getString(USER_EMAIL, ""));
+            tv_info_tel.setText(spf.getString(USER_TEL, ""));
+            tv_info_email.setText(spf.getString(USER_EMAIL, ""));
             tv_info_integral.setText("积分   " + spf.getString(USER_INTEGRAL, ""));
             tv_info_task.setText("今日进度   " + spf.getString(USER_TASK_COMPLETION, ""));
             Bitmap bitmap = BitmapFactory.decodeFile(spf.getString(USER_ICON,""));
@@ -85,20 +101,32 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.but_info_save:
                 // 执行修改用户信息的业务
-
+                String origin_tel = spf.getString(USER_TEL, "");
+                String origin_email = spf.getString(USER_EMAIL,"");
+                String new_tel = tv_info_tel.getText().toString();
+                String new_email = tv_info_email.getText().toString();
+                if (!origin_tel.equals(new_tel) || !origin_email.equals(new_email)) {
+                    Map<String,String> map = new HashMap<>();
+                    map.put("user_name", spf.getString(USER_NAME,""));
+                    map.put("update_tel",new_tel);
+                    map.put("update_email",new_email);
+                    map.put("type","update");
+                    new UserPresenter(UserInfoActivity.this, map, "userinfo").fetch();
+                } else {
+                    Toast.makeText(UserInfoActivity.this,"信息尚未改变",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.but_info_cancel:
                 finish();
                 break;
             case R.id.tv_userinfo_tel:
-                inputDialog(tv_info_tel,1);
+                inputDialog(tv_info_tel,1); // 1 tel
                 break;
             case R.id.tv_userinfo_email:
-                inputDialog(tv_info_email,2);
+                inputDialog(tv_info_email,2);   // 2 email
                 break;
             case R.id.tv_userinfo_alter_psw:
                 Intent intent = new Intent(UserInfoActivity.this, AlterPswActivity.class);
-                intent.putExtra("user_name",tv_info_name.getText().toString().trim());
                 this.startActivity(intent);
                 break;
         }
@@ -112,10 +140,9 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         final EditText inText = new EditText(this);
         inText.setFocusable(true);
         if (type == 1) {
-            types = "*电话  ";
             inText.setInputType(InputType.TYPE_CLASS_PHONE); // 设置输入类型为phone
         } else if (type == 2){
-            types = "*邮箱  ";
+            inText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("原:" + tv.getText().toString()).setView(inText)
@@ -125,7 +152,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 Log.e("UserInfoActivity",inText.getText().toString());
                 if (TextUtils.isEmpty(inText.getText().toString())) {
                 } else {
-                    tv.setText(types + inText.getText().toString());
+                    tv.setText(inText.getText().toString());
+                    tv.setTextColor(Color.BLUE);
                 }
             }
         });
@@ -133,4 +161,22 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    @Override
+    public void ShowLoading() {
+
+    }
+
+    @Override
+    public void ShowBackMsg(Object obj) {
+        try {
+            if (JsonUtils.LoginAndRegisterJson(obj.toString()).equals("Update_Success")) {
+                Toast.makeText(UserInfoActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(UserInfoActivity.this,"修改失败",Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

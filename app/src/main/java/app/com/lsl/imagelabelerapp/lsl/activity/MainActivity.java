@@ -39,8 +39,6 @@ import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
-import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.AUTO_LOGIN;
-import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.SPF_USERINFO;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
 
@@ -73,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private ImageAdapter adapter;
     private long FirstTime = 0;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,16 +232,16 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, ManagerActivity.class);
             this.startActivity(intent);
 
-            Toast.makeText(MainActivity.this, "我是管理员", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_setting) {
-            Toast.makeText(MainActivity.this, "设置", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_exit_acc) {
-            spf2 = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
-            spf2.edit().putBoolean(AUTO_LOGIN, false).commit();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent = new Intent(MainActivity.this, SetActivity.class);
             this.startActivity(intent);
+
+        } else if (id == R.id.nav_exit_acc) {
+//            spf2 = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
+//            spf2.edit().putBoolean(AUTO_LOGIN, false).commit();
+//            intent = new Intent(MainActivity.this, LoginActivity.class);
+//            this.startActivity(intent);
             finish();
-            Toast.makeText(MainActivity.this, "退出当前用户", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

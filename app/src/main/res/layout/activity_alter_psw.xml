@@ -13,6 +13,7 @@
 
     <EditText
         android:id="@+id/et_origin_psw"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -24,6 +25,7 @@
 
     <EditText
         android:id="@+id/et_new_psw"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -35,6 +37,7 @@
 
     <EditText
         android:id="@+id/et_new_rpsw"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

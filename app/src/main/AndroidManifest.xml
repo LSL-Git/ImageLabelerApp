@@ -54,6 +54,9 @@
 
         <activity android:name=".lsl.activity.AlterPswActivity"
                   android:label="修改密码"/>
+
+        <activity android:name=".lsl.activity.SetActivity"
+                  android:label="设置"/>
     </application>
 
 </manifest>
