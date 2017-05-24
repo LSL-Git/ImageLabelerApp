@@ -113,7 +113,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         inText.setFocusable(true);
         if (type == 1) {
             types = "*电话  ";
-            inText.setInputType(InputType.TYPE_CLASS_NUMBER); // 设置输入类型为number
+            inText.setInputType(InputType.TYPE_CLASS_PHONE); // 设置输入类型为phone
         } else if (type == 2){
             types = "*邮箱  ";
         }

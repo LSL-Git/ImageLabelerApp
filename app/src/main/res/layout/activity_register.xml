@@ -24,6 +24,7 @@
     <EditText
         android:id="@+id/et_register_user_tel"
         android:hint="联系方式"
+        android:inputType="phone"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
@@ -33,6 +34,7 @@
     <EditText
         android:id="@+id/et_register_user_psw"
         android:hint="新密码"
+        android:inputType="textPassword"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
@@ -42,6 +44,7 @@
     <EditText
         android:id="@+id/et_register_user_rpsw"
         android:hint="确认密码"
+        android:inputType="textPassword"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"

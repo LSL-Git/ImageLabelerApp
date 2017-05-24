@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,8 @@ import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.AUTO_LOGIN;
+import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.SPF_USERINFO;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tv_user_name;
     private TextView tv_user_status;
     private String user_name;
-    private SharedPreferences spf;
+    private SharedPreferences spf,spf2;
     public static final String USER_ID = "user_id";		// 用户id
     public static final String USER_NAME = "user_name";	// 用户名
     public static final String USER_PSW = "user_psw";	// 用户密码
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity
     public static final String SPF_USERALLINFO = "UserAllInfo";
     private RecyclerView recyclerView;
     private ImageAdapter adapter;
+    private long FirstTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +237,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_setting) {
             Toast.makeText(MainActivity.this, "设置", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_exit_acc) {
+            spf2 = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
+            spf2.edit().putBoolean(AUTO_LOGIN, false).commit();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            this.startActivity(intent);
+            finish();
             Toast.makeText(MainActivity.this, "退出当前用户", Toast.LENGTH_SHORT).show();
         }
 
@@ -324,11 +333,18 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-
-
-
-
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - FirstTime > 2000) {
+                Toast.makeText(MainActivity.this,"双击退出",Toast.LENGTH_SHORT).show();
+                FirstTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

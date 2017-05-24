@@ -23,6 +23,7 @@
     <EditText
         android:id="@+id/et_login_user_psw"
         android:hint="密码"
+        android:inputType="textPassword"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
