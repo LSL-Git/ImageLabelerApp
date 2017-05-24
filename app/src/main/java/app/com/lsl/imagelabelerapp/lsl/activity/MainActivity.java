@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     public static final String USER_LABEL_ALL_NUM = "label_all_num";	// 总标签数
     public static final String USER_LABEL_SUCCESS_NUM = "label_success_num";	// 标签成功数
     public static final String USER_ICON_PATH = "/mnt/sdcard/LabelerApp/icon/";
-    private static final String SPF_NAME = "UserAllInfo";
+    public static final String SPF_USERALLINFO = "UserAllInfo";
     private RecyclerView recyclerView;
     private ImageAdapter adapter;
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
         // 获取用户名
         Intent intent = getIntent();
         user_name = intent.getStringExtra("user_name");
-        spf = getSharedPreferences(SPF_NAME, Context.MODE_WORLD_READABLE);
+        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
         // 根据用户名请求用户的所有信息
         String TYPE = "userinfo";
         Map<String,String> map = new HashMap<>();
@@ -219,18 +219,21 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-            Toast.makeText(MainActivity.this, "nav_gallery", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_slideshow) {
-            Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
-            Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
+        if (id == R.id.nav_my_task) {
+            Toast.makeText(MainActivity.this, "今日任务", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_guess_your_like) {
+            Toast.makeText(MainActivity.this, "猜你喜欢", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_history) {
+            Toast.makeText(MainActivity.this, "标签历史", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_manager) {
+            Intent intent = new Intent(MainActivity.this, ManagerActivity.class);
+            this.startActivity(intent);
+
+            Toast.makeText(MainActivity.this, "我是管理员", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_setting) {
+            Toast.makeText(MainActivity.this, "设置", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_exit_acc) {
+            Toast.makeText(MainActivity.this, "退出当前用户", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -243,7 +246,6 @@ public class MainActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.iv_user_icon:
                 Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
-                intent.putExtra("spf",SPF_NAME);
                 startActivity(intent);
                 break;
         }

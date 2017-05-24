@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/but_check_users_info"
+        android:text="查看用户信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/but_export_label_result"
+        android:text="导出标签化结果"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/but_upload_img"
+        android:text="上传图片资料"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

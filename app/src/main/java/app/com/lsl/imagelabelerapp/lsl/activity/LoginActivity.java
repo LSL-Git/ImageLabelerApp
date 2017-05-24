@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,6 +40,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SharedPreferences spf;
     private String user_name;
     private String user_psw;
+    public static String SPF_USERINFO = "UserInfo";
+    public static String AUTO_LOGIN = "AUTO_LOGIN";
+    public static String IS_REMEMBER = "IS_REMEMBER";
+    public static String USER_NAME = "USER_NAME";
+    public static String PASSWORD = "PASSWORD";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,16 +53,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 加载控件
         initLayout();
 
-        spf = getSharedPreferences("UserInfo", Context.MODE_WORLD_READABLE);
+        spf = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
 
         // 判断记住密码多选框的状态
-        if (spf.getBoolean("IS_REMEMBER",false)) {
+        if (spf.getBoolean(IS_REMEMBER,false)) {
             // 设置默认是记住密码状态
             cb_is_remeber_psw.setChecked(true);
-            et_user_name.setText(spf.getString("USER_NAME",""));
-            et_user_psw.setText(spf.getString("PASSWORD",""));
+            et_user_name.setText(spf.getString(USER_NAME,""));
+            et_user_psw.setText(spf.getString(PASSWORD,""));
             // 判断自动登录状态
-            if (spf.getBoolean("AUTO_LOGIN", false)) {
+            if (spf.getBoolean(AUTO_LOGIN, false)) {
                 // 设置默认是自动登录
                 cb_auto_login.setChecked(true);
 
@@ -66,7 +70,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 user_psw = et_user_psw.getText().toString().trim();
 
                  // 启动登录线程
-                new UserPresenter(this,LoginTask.Login(spf.getString("USER_NAME",""),spf.getString("PASSWORD","")), LoginTask.getTYPE()).fetch();
+                new UserPresenter(this,LoginTask.Login(spf.getString(USER_NAME,""),
+                        spf.getString(PASSWORD,"")), LoginTask.getTYPE()).fetch();
             }
         }
 
@@ -118,21 +123,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (buttonView.getId()) {
             case R.id.cb_login_remember_psw:
                 if (cb_is_remeber_psw.isChecked()) {
-                    Log.e("LoginActivity","记住密码已选中");
-                    spf.edit().putBoolean("IS_REMEMBER", true).commit();
+//                    Log.e("LoginActivity","记住密码已选中");
+                    spf.edit().putBoolean(IS_REMEMBER, true).commit();
                 } else {
-                    Log.e("LoginActivity","记住密码没选中");
-                    spf.edit().putBoolean("IS_REMEMBER", false).commit();
+//                    Log.e("LoginActivity","记住密码没选中");
+                    spf.edit().putBoolean(IS_REMEMBER, false).commit();
                 }
                 break;
 
             case R.id.cb_auto_login:
                 if (cb_auto_login.isChecked()) {
-                    Log.e("LoginActivity","自动登录已选中");
-                    spf.edit().putBoolean("AUTO_LOGIN", true).commit();
+//                    Log.e("LoginActivity","自动登录已选中");
+                    spf.edit().putBoolean(AUTO_LOGIN, true).commit();
                 } else {
-                    Log.e("LoginActivity","自动登录没选中");
-                    spf.edit().putBoolean("AUTO_LOGIN", false).commit();
+//                    Log.e("LoginActivity","自动登录没选中");
+                    spf.edit().putBoolean(AUTO_LOGIN, false).commit();
                 }
                 break;
         }
@@ -158,8 +163,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // 记住用户名和密码
             if (cb_is_remeber_psw.isChecked()) {
                 SharedPreferences.Editor editor = spf.edit();
-                editor.putString("USER_NAME", user_name);
-                editor.putString("PASSWORD", user_psw);
+                editor.putString(USER_NAME, user_name);
+                editor.putString(PASSWORD, user_psw);
                 editor.commit();
             }
 
