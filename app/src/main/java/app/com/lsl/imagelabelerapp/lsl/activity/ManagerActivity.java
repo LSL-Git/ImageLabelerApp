@@ -8,13 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.sleepyzzz.photo_selector.activity.PhotoPickerActivity;
+
 import app.com.lsl.imagelabelerapp.R;
+
+import static android.widget.Toast.makeText;
 
 /** 管理员操作页面
  * Created by M1308_000 on 2017/5/19.
  */
 
 public class ManagerActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private static final String url = "http://114.115.141.43:4040/webServer/UploadImages";
 
     private Button but_export_label_result;
     private Button but_upload_img;
@@ -47,17 +53,19 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.but_check_users_info:
-                Toast.makeText(this,"查看用户信息",Toast.LENGTH_SHORT).show();
+                makeText(this,"查看用户信息",Toast.LENGTH_SHORT).show();
                 intent = new Intent(ManagerActivity.this, UserNameListActivity.class);
                 this.startActivity(intent);
                 break;
             case R.id.but_export_label_result:
-                Toast.makeText(this,"导出标签化结果",Toast.LENGTH_SHORT).show();
+                makeText(this,"导出标签化结果",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.but_upload_img:
-                intent = new Intent(ManagerActivity.this, UpLoadImgActivity.class);
-                this.startActivity(intent);
-                Toast.makeText(this,"上传图片资料",Toast.LENGTH_SHORT).show();
+                // 调用图片选择并上传模块
+                // 参数二：最大选择图片数，
+                // 参数三：图片选择路径，null表示所有路径
+                // 图片上传的服务器地址
+                PhotoPickerActivity.actionStart(ManagerActivity.this, 10, null, url);
                 break;
         }
     }

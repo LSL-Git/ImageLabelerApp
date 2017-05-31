@@ -57,6 +57,11 @@
 
         <activity android:name=".lsl.activity.SetActivity"
                   android:label="设置"/>
+
+        <activity android:name="com.sleepyzzz.photo_selector.activity.PhotoPickerActivity"
+                  android:label="图片多选择页面"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
