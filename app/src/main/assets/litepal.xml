@@ -5,7 +5,7 @@
 
 
     <list>
-        <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.UserTable"></mapping>
         <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.ImageURLTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.UserTable"></mapping>
     </list>
 </litepal>

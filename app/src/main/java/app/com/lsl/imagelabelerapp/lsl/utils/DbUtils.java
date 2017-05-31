@@ -23,12 +23,10 @@ public class DbUtils {
      * @throws Exception
      */
     public static void SaveImgUrl(JSONObject object, int num) throws Exception{
-        Log.e("json","save...");
+
+
         for (int i = 0; i < num; i++) {
             JSONObject json = object.getJSONObject("img" + i);
-//            Log.e("json",json.getString("upload_time"));
-//            Log.e("json",json.getString("imgUrl"));
-//            Log.e("json",json.getString("img_name"));
 
             ImageURLTable urlTable = new ImageURLTable();
             List<ImageURLTable> urlTables = DataSupport.select("img_url").
@@ -55,12 +53,17 @@ public class DbUtils {
     public static ArrayList<String> GetImgUrl() {
         ArrayList<String> lists = new ArrayList<>();
 
-        List<ImageURLTable> urlTables = DataSupport.select("img_url","is_label").find(ImageURLTable.class);
-        for (ImageURLTable urlTable : urlTables) {
-            if (urlTable.getIs_label() == 0) {
-                lists.add(urlTable.getImg_url());
+        try {
+            List<ImageURLTable> urlTables = DataSupport.select("img_url","is_label").find(ImageURLTable.class);
+            for (ImageURLTable urlTable : urlTables) {
+                if (urlTable.getIs_label() == 0) {
+                    lists.add(urlTable.getImg_url());
+                }
             }
+        } catch (Exception e) {
+            Log.e("DbUtils:", " " + e.getMessage());
         }
+
         return lists;
     }
 

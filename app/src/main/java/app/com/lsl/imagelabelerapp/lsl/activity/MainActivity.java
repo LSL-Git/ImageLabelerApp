@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +36,6 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
-import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
@@ -76,13 +74,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            Connector.getDatabase();//创建数据库
-            Log.e("MainActivity","create database success!!!");
-        } catch (Exception e) {
-            Log.e("MainActivity","create database fail!!!" + e.getMessage());
-            e.printStackTrace();
-        }
 
        // 加载控件
         initLayout();
@@ -151,11 +142,6 @@ public class MainActivity extends AppCompatActivity
         map.put("type","query_user_info");
         new UserPresenter(this, map, TYPE).fetch();
 
-        // 获取图片URL列表
-        String TYPE2 = "images";
-        Map<String,String> map2 = new HashMap<>();
-        map2.put("type","GetImgUrl");
-        new UserPresenter(this, map2, TYPE2).fetch();
 
     }
 
@@ -268,15 +254,6 @@ public class MainActivity extends AppCompatActivity
     public void ShowBackMsg(Object obj) {
         SaveUserInfo(obj.toString());
         ShowUserInfo();
-
-        try {
-            JSONObject object = new JSONObject(obj.toString());
-            int num = object.getInt("num");
-            DbUtils.SaveImgUrl(object,num);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**

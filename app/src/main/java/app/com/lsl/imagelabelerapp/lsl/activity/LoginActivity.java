@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,11 +18,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.litepal.tablemanager.Connector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
+import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 
@@ -50,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // 加载控件
+        // 加载控件 和相关数据
         initLayout();
 
         spf = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
@@ -78,6 +87,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initLayout() {
+        try {
+            Connector.getDatabase();//创建数据库
+
+            Log.e("MainActivity","create database success!!!");
+        } catch (Exception e) {
+            Log.e("MainActivity","create database fail!!!" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.arg1 = 1;
+                mhandler.sendMessage(msg);
+            }
+        }).start();
+
+
+
         but_login = (Button) findViewById(R.id.but_login);
         but_to_register = (Button) findViewById(R.id.but_to_register);
         cb_is_remeber_psw = (CheckBox) findViewById(R.id.cb_login_remember_psw);
@@ -93,6 +122,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cb_auto_login.setOnCheckedChangeListener(this);
 
     }
+
+    Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.arg1 == 1) {
+                // 获取图片URL列表
+                String TYPE2 = "images";
+                Map<String, String> map2 = new HashMap<>();
+                map2.put("type", "GetImgUrl");
+                new UserPresenter(LoginActivity.this, map2, TYPE2).fetch();
+            }
+        }
+    };
+
 
     @Override
     public void onClick(View v) {
@@ -147,18 +191,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void ShowLoading() {
-        tv_show_login_msg.setText("登录中...");
+        //tv_show_login_msg.setText("登录中...");
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+
+        try {
+            JSONObject object = new JSONObject(obj.toString());
+            int num = object.getInt("num");
+            if (num > 0)
+                // 将图片的URL保存数据库
+                DbUtils.SaveImgUrl(object, num);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         String RESULT = "";
         try {
             RESULT = JsonUtils.LoginAndRegisterJson(obj.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         if (RESULT.equals("Login_Success")) { // 登录成功
             // 记住用户名和密码
             if (cb_is_remeber_psw.isChecked()) {
@@ -178,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             tv_show_login_msg.setText("密码错误");
         } else if (RESULT.equals("User_Not_Exist")) {// 用户不存在
             tv_show_login_msg.setText("用户名不存在.");
-        } else {    // 登录失败
+        } else if (RESULT.equals("Login_Fail")){    // 登录失败
             tv_show_login_msg.setText("登录失败");
         }
     }
