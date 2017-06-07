@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initLayout() {
         try {
             Connector.getDatabase();//创建数据库
-
             Log.e("MainActivity","create database success!!!");
         } catch (Exception e) {
             Log.e("MainActivity","create database fail!!!" + e.getMessage());

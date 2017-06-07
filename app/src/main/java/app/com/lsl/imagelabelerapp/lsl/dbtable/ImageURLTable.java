@@ -1,4 +1,4 @@
-package app.com.lsl.imagelabelerapp.lsl.createtable;
+package app.com.lsl.imagelabelerapp.lsl.dbtable;
 
 import org.litepal.crud.DataSupport;
 

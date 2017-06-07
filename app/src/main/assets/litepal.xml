@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="UserDb"></dbname>
-    <version value="1"></version>
-
-
+    <version value="2"></version>
+    <!--当version改变时才会更新新增的表-->
     <list>
-        <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.ImageURLTable"></mapping>
-        <mapping class="app.com.lsl.imagelabelerapp.lsl.createtable.UserTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.UserTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.PicTable"></mapping>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable"/>
     </list>
 </litepal>

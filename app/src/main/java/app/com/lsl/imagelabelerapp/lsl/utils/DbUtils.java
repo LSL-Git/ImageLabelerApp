@@ -8,7 +8,7 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.com.lsl.imagelabelerapp.lsl.createtable.ImageURLTable;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 
 /** 数据库操作类
  * Created by M1308_000 on 2017/5/19.
