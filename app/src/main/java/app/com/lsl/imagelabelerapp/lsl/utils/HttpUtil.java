@@ -22,7 +22,7 @@ public class HttpUtil implements UserModel {
 
 //    String urlPath = "http://192.168.1.101/webServer/";
     @Override
-    public void loadData(final Map<String, String> map, String Type, final DataLoadOnListener listener) {
+    public void loadData(final Map<String, String> map, final String Type, final DataLoadOnListener listener) {
         urlPath += Type;
         this.listener = listener;
 
@@ -54,7 +54,6 @@ public class HttpUtil implements UserModel {
                         Message message = new Message();
                         message.obj = RESULT;
                         handler.sendMessage(message);
-
                     }
                 }catch (Exception e) {
                     e.printStackTrace();

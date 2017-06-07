@@ -9,8 +9,8 @@ import java.util.List;
  * Created by M1308_000 on 2017/4/30.
  */
 
-public class AppAcitivities {
-//    public static HashMap<String, Activity> activities = new HashMap<>();
+public class AppActivities {
+
     public static List<Activity> activities = new ArrayList<>();
     // 将一个活动添加到缓存
     public static void addActivity(Activity activity) {

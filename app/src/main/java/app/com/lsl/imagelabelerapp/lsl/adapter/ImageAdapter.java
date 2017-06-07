@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.BaseViewHold
 
     @Override
     public void onBindViewHolder(ImageAdapter.BaseViewHolder holder, int position) {
-        Log.e("ImageAdapter","pos " + position);
+        //Log.e("ImageAdapter","pos " + position);
         holder.setData(dataList.get(position), position);
     }
 
@@ -101,7 +100,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.BaseViewHold
             this.pos = pos;
             if (data != null) {
                 img_url = (String) data;
-                Log.e("ImageAdapter","setData text " + img_url + " pos " + pos);
+               //Log.e("ImageAdapter","setData text " + img_url + " pos " + pos);
                 Glide.with(itemView.getContext()).load(img_url).diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.mipmap.ic_launcher).crossFade().into(ivImage);
                 Bitmap bitmap = BitmapFactory.decodeResource(res,R.mipmap.ic_launcher);

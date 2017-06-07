@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
 
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.AUTO_LOGIN;
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.SPF_USERINFO;
@@ -30,6 +31,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        AppActivities.addActivity(this);
         tv_set_user_info = (TextView) findViewById(R.id.tv_set_user_info);
         tv_set_alter_psw = (TextView) findViewById(R.id.tv_set_alter_psw);
         but_exit_acc = (Button) findViewById(R.id.but_exit_acc);
@@ -53,6 +55,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.but_exit_acc:
                 SharedPreferences spf = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
                 spf.edit().putBoolean(AUTO_LOGIN, false).commit();
+                MyApplication.quitApp();    // 移除所有后台活动
                 intent = new Intent(SetActivity.this, LoginActivity.class);
                 this.startActivity(intent);
                 finish();

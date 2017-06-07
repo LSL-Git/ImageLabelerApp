@@ -49,7 +49,7 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initLayout() {
-
+        AppActivities.addActivity(this);
         et_origin_psw = (EditText) findViewById(R.id.et_origin_psw);
         et_new_psw = (EditText) findViewById(R.id.et_new_psw);
         et_new_rpsw = (EditText) findViewById(R.id.et_new_rpsw);

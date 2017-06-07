@@ -55,6 +55,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
 
     // 加载控件
     private void Layout() {
+        AppActivities.addActivity(this);
         setContentView(R.layout.activity_img);
         imageView = (ImageView) findViewById(R.id.iv_show_image_one);
         et_label_one = (EditText) findViewById(R.id.et_label_one);

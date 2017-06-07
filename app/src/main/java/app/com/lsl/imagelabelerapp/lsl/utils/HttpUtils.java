@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
-import app.com.lsl.imagelabelerapp.lsl.activity.AppAcitivities;
+import app.com.lsl.imagelabelerapp.lsl.activity.AppActivities;
 import app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity;
 import app.com.lsl.imagelabelerapp.lsl.activity.MainActivity;
 import app.com.lsl.imagelabelerapp.lsl.activity.RegisterActivity;
@@ -99,7 +99,7 @@ public class HttpUtils implements Runnable{
                 Intent intent2 = new Intent(MyApplication.getContext(), LoginActivity.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 MyApplication.getContext().startActivity(intent2);
-                AppAcitivities.removeActivity(new RegisterActivity());
+                AppActivities.removeActivity(new RegisterActivity());
 
                 Toast.makeText(MyApplication.getContext(),"" + result, Toast.LENGTH_SHORT).show();
             } else {    // 注册失败

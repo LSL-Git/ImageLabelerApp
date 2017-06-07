@@ -66,6 +66,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initLayout() {
+        AppActivities.addActivity(this);
         iv_info_icon = (ImageView) findViewById(R.id.iv_info_icon);
         tv_info_name = (TextView) findViewById(R.id.tv_userinfo_name);
         tv_info_tel = (TextView) findViewById(R.id.tv_userinfo_tel);

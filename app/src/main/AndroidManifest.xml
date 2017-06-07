@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <!--android:name=".lsl.App.MyApplication"-->
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -60,6 +59,10 @@
 
         <activity android:name="com.sleepyzzz.photo_selector.activity.PhotoPickerActivity"
                   android:label="图片多选择页面"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.SearchPicActivity"
+                  android:label="检索图片"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

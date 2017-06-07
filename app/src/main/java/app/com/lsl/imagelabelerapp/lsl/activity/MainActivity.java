@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity
     // 加载数据
     private void initLayout() {
         LoadData(); // 从服务器下载相关数据
-
         setContentView(R.layout.activity_main);
+        AppActivities.addActivity(this);    // 将当前activity添加到activity管理器中
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // 找到头像id 并设置点击监听
@@ -220,6 +220,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_setting) {
             intent = new Intent(MainActivity.this, SetActivity.class);
+            this.startActivity(intent);
+
+        } else if (id == R.id.nav_search_pic) {
+            intent = new Intent(MainActivity.this, SearchPicActivity.class);
             this.startActivity(intent);
 
         } else if (id == R.id.nav_exit_acc) {

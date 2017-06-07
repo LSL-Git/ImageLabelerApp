@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppAcitivities.addActivity(this);
+        AppActivities.addActivity(this);
         setContentView(R.layout.activity_register);
         // 加载控件
         initLayout();
