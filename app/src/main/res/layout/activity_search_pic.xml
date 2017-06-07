@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    tools:context=".lsl.activity.SearchPicActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="搜索图片"
+    <app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView
+        android:id="@+id/main_search_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+    </app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView>
+
+    <ListView
+        android:id="@+id/main_lv_search_results"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 
 </LinearLayout>
