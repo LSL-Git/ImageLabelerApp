@@ -10,11 +10,6 @@ import app.com.lsl.imagelabelerapp.lsl.activity.AppActivities;
 
 public class MyApplication extends LitePalApplication {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
     // 退出程序
     public static void quitApp() {
         AppActivities.FinishAll();

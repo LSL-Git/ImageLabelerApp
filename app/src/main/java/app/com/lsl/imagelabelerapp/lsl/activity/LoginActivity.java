@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
@@ -222,6 +223,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.putString(PASSWORD, user_psw);
                 editor.commit();
             }
+
+            User.setUser(user_name);
 
             // 登录成功，跳转到主页面
             Intent intent = new Intent(this, MainActivity.class);

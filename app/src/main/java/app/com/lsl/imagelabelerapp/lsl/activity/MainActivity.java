@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
     private TextView tv_user_name;
     private TextView tv_user_status;
     private String user_name;
-    private SharedPreferences spf,spf2;
+    private SharedPreferences spf;
     public static final String USER_ID = "user_id";		// 用户id
     public static final String USER_NAME = "user_name";	// 用户名
     public static final String USER_PSW = "user_psw";	// 用户密码

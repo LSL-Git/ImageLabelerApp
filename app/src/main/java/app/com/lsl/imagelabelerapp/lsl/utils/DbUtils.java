@@ -19,7 +19,82 @@ import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
 public class DbUtils {
 
     private static final String TAG = "DbUtils";
+    private static String picPath ;
 
+    /**
+     * 根据图片类型获取图片存储路径
+     * @param PicType
+     * @param path
+     * @return
+     */
+    public static String GetPicPath(String PicType, String path) {
+        picPath = path;
+        int level;
+        String parentName;
+        List<PicFileTable> picFileList = DataSupport.select("Level","parentName")
+                .where("fileName = ?", PicType).find(PicFileTable.class);
+        if (picFileList.size() != 0) {
+            for (PicFileTable picFileTable : picFileList) {
+                level = picFileTable.getLevel();
+                parentName = picFileTable.getParentName();
+                picPath += parentName + "/";
+                if (level > 2)
+                    GetPicPath(parentName,picPath);
+            }
+        }
+        return s(picPath);
+    }
+
+    /**
+     * 倒置文件路径
+     * @param Path
+     * @return
+     */
+    private static String s(String Path) {
+        String result = "/";
+        String [] str = Path.split("/");
+        for (int i = str.length - 1; i > 0; i--)
+            result += str[i] + "/";
+        return result;
+    }
+
+    /**
+     * 根据图片类型获取该类型图片数量
+     * @param PicType
+     * @return
+     */
+    public static int GetPicNum(String PicType) {
+        int num = 0;
+        List<PicTypeAndNumTb> numList = DataSupport.select("PicNum")
+                .where("PicType = ?", PicType).find(PicTypeAndNumTb.class);
+        if (numList.size() != 0) {
+            for (PicTypeAndNumTb picType : numList) {
+                num = picType.getPicNum();
+            }
+        }
+        return num;
+    }
+
+    /**
+     * 获取图片所有种类
+     * @return
+     */
+    public static ArrayList<String> GetPicType() {
+        ArrayList<String> lists = new ArrayList<>();
+        List<PicTypeAndNumTb> typeList = DataSupport.select("PicType").find(PicTypeAndNumTb.class);
+        if (typeList.size() != 0) {
+            for (PicTypeAndNumTb picType : typeList) {
+                lists.add(picType.getPicType());
+            }
+        }
+        return lists;
+    }
+
+    /**
+     * 保存图片类型和数量
+     * @param picType
+     * @param picNum
+     */
     public static void SavePicTypeNum(String picType, int picNum) {
         PicTypeAndNumTb typeAndNumTb = new PicTypeAndNumTb();
         List<PicTypeAndNumTb> typeAndNumTbList = DataSupport.select("PicType")

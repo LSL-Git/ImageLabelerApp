@@ -14,15 +14,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.SearchAdapter;
 import app.com.lsl.imagelabelerapp.lsl.model.Bean;
-import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.DateUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
 /** 根据图片名称检索图片
  * Created by M1308_000 on 2017/6/7.
@@ -129,10 +129,8 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
         search_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String,String> map = new HashMap<>();
-                map.put("type","GetPicInfo");
-                new Thread(new HttpUtils(map,"GetPicInfo")).start();
-                Toast.makeText(SearchPicActivity.this, "click", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(SearchPicActivity.this, "click:" + User.getUser() + DateUtils.getNowTime(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -202,10 +200,13 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
      * 获取db 数据
      */
     private void getDbData() {
-        int size = 100;
+        ArrayList<String> picTypeList = DbUtils.GetPicType();
+        int size = picTypeList.size();
         dbData = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            dbData.add(new Bean(R.mipmap.icon, "android开发必备技能" + (i + 1), "Android自定义view——自定义搜索view", i * 20 + 2 + ""));
+            String picType = picTypeList.get(i);
+            dbData.add(new Bean(R.mipmap.icon, picType, DbUtils.GetPicPath(picType,"/")
+                    + picType, DbUtils.GetPicNum(picType) + ""));
         }
     }
 
@@ -247,7 +248,8 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
             //更新搜索数据
             resultAdapter.notifyDataSetChanged();
         }
-        Toast.makeText(this, "完成搜素", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "完成搜索" + SearchEtInput.getText().toString(), Toast.LENGTH_SHORT).show();
     }
 
     /**
