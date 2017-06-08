@@ -1,10 +1,12 @@
 package app.com.lsl.imagelabelerapp.lsl.dbtable;
 
+import org.litepal.crud.DataSupport;
+
 /** 用户搜索图片历史
  * Created by M1308_000 on 2017/6/7.
  */
 
-public class SearchHistoryTable {
+public class SearchHistoryTable extends DataSupport{
     /**
      * 搜索用户名
      */

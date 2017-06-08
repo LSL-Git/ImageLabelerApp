@@ -21,7 +21,6 @@ import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.SearchAdapter;
 import app.com.lsl.imagelabelerapp.lsl.model.Bean;
-import app.com.lsl.imagelabelerapp.lsl.utils.DateUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
 /** 根据图片名称检索图片
@@ -76,7 +75,7 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
     /**
      * 默认提示框显示项的个数
      */
-    private static int DEFAULT_HINT_SIZE = 4;
+    private static int DEFAULT_HINT_SIZE = 6;
 
     /**
      * 提示框显示项的个数
@@ -129,8 +128,8 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
         search_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(SearchPicActivity.this, "click:" + User.getUser() + DateUtils.getNowTime(), Toast.LENGTH_SHORT).show();
+//                DbUtils.GetSearchHistory(User.getUser());
+//                DbUtils.SaveSearchRecord("学校","name");
             }
         });
     }
@@ -214,10 +213,8 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
      * 获取热搜版data 和adapter
      */
     private void getHintData() {
-        hintData = new ArrayList<>(hintSize);
-        for (int i = 1; i <= hintSize; i++) {
-            hintData.add("热搜版" + i + "：Android自定义View");
-        }
+        hintData = new ArrayList<>();
+        hintData = DbUtils.GetSearchHistory(User.getUser());
         hintAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hintData);
     }
 
@@ -249,7 +246,12 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
             resultAdapter.notifyDataSetChanged();
         }
 
-        Toast.makeText(this, "完成搜索" + SearchEtInput.getText().toString(), Toast.LENGTH_SHORT).show();
+        String searchContent = SearchEtInput.getText().toString().trim();
+        if (!TextUtils.isEmpty(searchContent)) {
+            // 保存搜索记录
+            DbUtils.SaveSearchRecord(searchContent, User.getUser());
+        }
+
     }
 
     /**

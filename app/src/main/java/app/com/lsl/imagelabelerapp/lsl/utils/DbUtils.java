@@ -1,5 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.utils;
 
+import android.database.Cursor;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import java.util.List;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
 
 /** 数据库操作类
  * Created by M1308_000 on 2017/5/19.
@@ -20,6 +22,54 @@ public class DbUtils {
 
     private static final String TAG = "DbUtils";
     private static String picPath ;
+
+    /**
+     * 获取图片搜索历史内容
+     * @param user
+     * @return
+     */
+    public static List<String> GetSearchHistory(String user) {
+        List<String> list = new ArrayList<>();
+        List<SearchHistoryTable> search_history_list = DataSupport.select("SearchContent")
+                .where("UserName = ?", user).order("SearchTime desc").limit(10).find(SearchHistoryTable.class);
+       if (search_history_list.size() != 0) {
+           for (SearchHistoryTable r : search_history_list) {
+               list.add(r.getSearchContent());
+           }
+       }
+       return list;
+    }
+
+    /**
+     * 保存搜索记录
+     * @param content   搜索内容
+     * @param user  当前用户
+     */
+    public static void SaveSearchRecord(String content, String user) {
+        SearchHistoryTable searchHistory = new SearchHistoryTable();
+        int num = 0;
+        Cursor cursor = DataSupport.findBySQL("select SearchContent, SearchNum from SearchHistoryTable where " +
+                "SearchContent = '" + content + "' and UserName = '" + user + "'");
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                num = cursor.getInt(1);
+            }
+            searchHistory.setSearchNum(num + 1);
+            searchHistory.setSearchTime(DateUtils.getNowTime());
+            int row = searchHistory.updateAll("SearchContent = ? and UserName = ?", content, user);
+            Log.e(TAG, "update " + row);
+        } else {
+            searchHistory.setSearchContent(content);
+            searchHistory.setUserName(user);
+            searchHistory.setSearchNum(1);
+            searchHistory.setSearchTime(DateUtils.getNowTime());
+            if (searchHistory.save()) {
+                Log.e(TAG, "search record save success");
+            }
+        }
+        cursor.close();
+    }
 
     /**
      * 根据图片类型获取图片存储路径
