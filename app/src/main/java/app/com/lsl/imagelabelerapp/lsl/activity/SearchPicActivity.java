@@ -8,17 +8,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.SearchAdapter;
 import app.com.lsl.imagelabelerapp.lsl.model.Bean;
+import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 /** 根据图片名称检索图片
  * Created by M1308_000 on 2017/6/7.
@@ -80,6 +84,7 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
     private static int hintSize = DEFAULT_HINT_SIZE;
     private EditText SearchEtInput;
     private ListView lvTips;
+    private Button search_but;
 
     /**
      * 设置提示框显示项的个数
@@ -119,6 +124,17 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
 
         SearchEtInput = (EditText) findViewById(R.id.search_et_input);
         lvTips = (ListView) findViewById(R.id.search_lv_tips);
+        search_but = (Button) findViewById(R.id.search_but);
+
+        search_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,String> map = new HashMap<>();
+                map.put("type","GetPicInfo");
+                new Thread(new HttpUtils(map,"GetPicInfo")).start();
+                Toast.makeText(SearchPicActivity.this, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

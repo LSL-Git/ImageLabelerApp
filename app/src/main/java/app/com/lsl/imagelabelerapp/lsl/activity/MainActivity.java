@@ -36,6 +36,7 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
@@ -142,6 +143,9 @@ public class MainActivity extends AppCompatActivity
         map.put("type","query_user_info");
         new UserPresenter(this, map, TYPE).fetch();
 
+        Map<String,String> map1 = new HashMap<>();
+        map1.put("type","GetPicInfo");
+        new Thread(new HttpUtils(map1,"GetPicInfo")).start();
 
     }
 
