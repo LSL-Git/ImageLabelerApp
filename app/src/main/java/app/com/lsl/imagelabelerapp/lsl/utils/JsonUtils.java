@@ -15,6 +15,17 @@ public class JsonUtils {
     private static final String DATA = "data";
     private static int count;
 
+    public static void SavePicInfo(String fileName,Object data) throws JSONException {
+        JSONObject json = new JSONObject(data.toString());
+        int count = json.getInt(COUNT);
+
+        for (int i = count; i > 0; i--) {
+            JSONObject dataJson = json.getJSONObject(DATA + i);
+            DbUtils.SavePicInfo(fileName,dataJson.getString("pic_name"),
+                    dataJson.getString("pic_label"),dataJson.getString("finish_label_time"));
+        }
+    }
+
     /**
      * \解析登录或注册返回来的信息
      * @param result
@@ -31,7 +42,7 @@ public class JsonUtils {
      * 解析图片信息并保存数据库
      * @param data
      */
-    public static void SavePicInfo(Object data) throws JSONException {
+    public static void SaveFileInfo(Object data) throws JSONException {
         JSONObject json = new JSONObject(data.toString());
         JSONObject FileInfoJson = json.getJSONObject(FILEINFO);//解析文件目录数据
         JSONObject PicTypeNumJson = json.getJSONObject(PICTYPENUM); // 解析图片类型和数量

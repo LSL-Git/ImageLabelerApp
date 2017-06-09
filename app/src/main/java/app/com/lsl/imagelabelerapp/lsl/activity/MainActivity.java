@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     public static final String USER_LABEL_SUCCESS_NUM = "label_success_num";	// 标签成功数
     public static final String USER_ICON_PATH = "/mnt/sdcard/LabelerApp/icon/";
     public static final String SPF_USERALLINFO = "UserAllInfo";
+    public static final String GETPICINFO = "GetPicInfo";
     private RecyclerView recyclerView;
     private ImageAdapter adapter;
     private long FirstTime = 0;
@@ -144,8 +145,8 @@ public class MainActivity extends AppCompatActivity
         new UserPresenter(this, map, TYPE).fetch();
 
         Map<String,String> map1 = new HashMap<>();
-        map1.put("type","GetPicInfo");
-        new Thread(new HttpUtils(map1,"GetPicInfo")).start();
+        map1.put("type","GetFileInfo");
+        new Thread(new HttpUtils(map1,GETPICINFO)).start();
 
     }
 

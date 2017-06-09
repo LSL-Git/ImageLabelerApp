@@ -11,6 +11,7 @@ import java.util.List;
 
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
 
@@ -22,6 +23,27 @@ public class DbUtils {
 
     private static final String TAG = "DbUtils";
     private static String picPath ;
+
+    /**
+     * 保存完成标签化图片的相关信息
+     * @param parentName
+     * @param picName
+     * @param picLabel
+     * @param picFinishTime
+     */
+    public static void SavePicInfo(String parentName, String picName, String picLabel, String picFinishTime) {
+        PicTable picTable = new PicTable();
+        Cursor cr = DataSupport.findBySQL("select * from PicTable where picName = '" + picName + "' and" +
+                " PicLabel = '" + picLabel + "'");
+        if (cr.getCount() == 0) {
+            picTable.setParentFile(parentName);
+            picTable.setPicName(picName);
+            picTable.setPicLabel(picLabel);
+            picTable.setFinishTime(picFinishTime);
+            if (picTable.save())
+                Log.e(TAG, "pic info save success");
+        }
+    }
 
     /**
      * 获取图片搜索历史内容

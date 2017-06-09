@@ -8,13 +8,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.App.User;
@@ -22,6 +24,9 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.SearchView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.SearchAdapter;
 import app.com.lsl.imagelabelerapp.lsl.model.Bean;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
+
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.GETPICINFO;
 
 /** 根据图片名称检索图片
  * Created by M1308_000 on 2017/6/7.
@@ -83,7 +88,6 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
     private static int hintSize = DEFAULT_HINT_SIZE;
     private EditText SearchEtInput;
     private ListView lvTips;
-    private Button search_but;
 
     /**
      * 设置提示框显示项的个数
@@ -117,21 +121,27 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(SearchPicActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                TextView tv_title = (TextView) view.findViewById(R.id.item_search_tv_title);
+                String fileName = tv_title.getText().toString().trim();
+                getPicInfo(fileName);
+                Toast.makeText(SearchPicActivity.this, position + "" + fileName, Toast.LENGTH_SHORT).show();
             }
         });
 
         SearchEtInput = (EditText) findViewById(R.id.search_et_input);
         lvTips = (ListView) findViewById(R.id.search_lv_tips);
-        search_but = (Button) findViewById(R.id.search_but);
 
-        search_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                DbUtils.GetSearchHistory(User.getUser());
-//                DbUtils.SaveSearchRecord("学校","name");
-            }
-        });
+    }
+
+    /**
+     * 根据该类图片名称获取该类图片信息
+     * @param fileName
+     */
+    private void getPicInfo(String fileName) {
+        Map<String,String> map = new HashMap<>();
+        map.put("type", "GetPicInfo");
+        map.put("fileName", fileName);
+        new Thread(new HttpUtils(map, GETPICINFO)).start();
     }
 
     /**
@@ -246,7 +256,7 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
             resultAdapter.notifyDataSetChanged();
         }
 
-        String searchContent = SearchEtInput.getText().toString().trim();
+        String searchContent = SearchEtInput.getText().toString().trim();   // 获取搜索框的内容
         if (!TextUtils.isEmpty(searchContent)) {
             // 保存搜索记录
             DbUtils.SaveSearchRecord(searchContent, User.getUser());

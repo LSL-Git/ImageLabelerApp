@@ -67,13 +67,18 @@ public class HttpUtils implements Runnable{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String type = map.get("type");
+            String fileName = map.get("fileName");
             Log.e(TAG, msg.obj.toString());
-            if (TYPE.equals("GetPicInfo")) {
-                try {
-                    JsonUtils.SavePicInfo(msg.obj);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            Log.e(TAG, type);
+            try {
+                if (type.equals("GetFileInfo")) {
+                    JsonUtils.SaveFileInfo(msg.obj);
+                } else if (type.equals("GetPicInfo")) {
+                    JsonUtils.SavePicInfo(fileName,msg.obj);
                 }
+            } catch (JSONException e) {
+            e.printStackTrace();
             }
 
         }

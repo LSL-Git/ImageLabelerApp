@@ -1,10 +1,12 @@
 package app.com.lsl.imagelabelerapp.lsl.dbtable;
 
+import org.litepal.crud.DataSupport;
+
 /** 已完成标签化图片的相关信息
  * Created by M1308_000 on 2017/6/7.
  */
 
-public class PicTable {
+public class PicTable extends DataSupport {
     /**
      * 上级目录
      */
