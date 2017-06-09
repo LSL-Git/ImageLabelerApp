@@ -1,9 +1,11 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -119,11 +121,33 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
         searchView.setmAutoCompleteAdapter(autoCompleteAdapter);
 
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            private String picNum;
+            private TextView tv_num;
+            private Intent intent;
+            private String fileName;
+            private String filePath;
+            private TextView tv_content;
+            private TextView tv_title;
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                TextView tv_title = (TextView) view.findViewById(R.id.item_search_tv_title);
-                String fileName = tv_title.getText().toString().trim();
+                tv_title = (TextView) view.findViewById(R.id.item_search_tv_title);
+                tv_content = (TextView) view.findViewById(R.id.item_search_tv_content);
+                tv_num = (TextView) view.findViewById(R.id.item_search_tv_comments);
+
+                filePath = tv_content.getText().toString().trim();
+                fileName = tv_title.getText().toString().trim();
+                picNum = tv_num.getText().toString().trim();
+
                 getPicInfo(fileName);
+
+                intent = new Intent(SearchPicActivity.this, ShowSearchResultActivity.class);
+                intent.putExtra("filePath", filePath);
+                intent.putExtra("fileName", fileName);
+                intent.putExtra("picNum", Integer.parseInt(picNum));
+                startActivity(intent);
+
                 Toast.makeText(SearchPicActivity.this, position + "" + fileName, Toast.LENGTH_SHORT).show();
             }
         });

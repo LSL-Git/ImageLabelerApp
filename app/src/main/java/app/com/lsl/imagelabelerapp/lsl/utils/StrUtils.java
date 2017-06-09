@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +13,24 @@ import java.util.Map;
  */
 
 public class StrUtils {
+
+
+    /**
+     * 将图片名称，文件路径，和http URL 拼装成完整 URL
+     * @param fileName
+     * @param filePath
+     * @return
+     */
+    public static ArrayList<String> GetPicUrl(String fileName, String filePath){
+        String url = "http://114.115.141.43:4040/webServer/LoadImage/Images/已完成";
+        ArrayList<String> list = new ArrayList<>();
+        List<String> picNameList = DbUtils.GetPicName(fileName);
+        for (int i = 0; i < picNameList.size(); i++) {
+            list.add(url + filePath + "/" + picNameList.get(i));
+        }
+        return list;
+
+    }
 
     /**
      * 解析输入流的信息

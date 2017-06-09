@@ -24,6 +24,23 @@ public class DbUtils {
     private static final String TAG = "DbUtils";
     private static String picPath ;
 
+
+    /**
+     * 根据图片类型获取图片所有名称
+     * @param fileName
+     * @return
+     */
+    public static List<String> GetPicName(String fileName) {
+        List<String> list = new ArrayList<>();
+        List<PicTable> picList = DataSupport.select("picName").where("parentFile = ?", fileName).find(PicTable.class);
+        if (picList.size() != 0) {
+            for (PicTable pic : picList) {
+                list.add(pic.getPicName());
+            }
+        }
+        return list;
+    }
+
     /**
      * 保存完成标签化图片的相关信息
      * @param parentName

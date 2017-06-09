@@ -65,6 +65,10 @@
                   android:label="检索图片"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".lsl.activity.ShowSearchResultActivity"
+                  android:label="显示搜索图片结果"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
