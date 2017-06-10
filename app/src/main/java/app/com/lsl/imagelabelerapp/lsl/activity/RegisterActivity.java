@@ -1,5 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.RegisterTask;
@@ -24,7 +26,6 @@ import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, UserView {
 
     private Button but_register;
-    private Button but_cancel;
     private EditText et_new_user_name;
     private EditText et_new_user_psw;
     private EditText et_new_user_rpsw;
@@ -38,12 +39,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         // 加载控件
         initLayout();
-
+        /**
+         * 加载顶部菜单
+         */
+        initMenu();
     }
 
     private void initLayout() {
         but_register = (Button) findViewById(R.id.but_register);
-        but_cancel = (Button) findViewById(R.id.but_cancel);
         et_new_user_name = (EditText) findViewById(R.id.et_register_user_name);
         et_new_user_psw = (EditText) findViewById(R.id.et_register_user_psw);
         et_new_user_rpsw = (EditText) findViewById(R.id.et_register_user_rpsw);
@@ -51,7 +54,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tv_show_msg = (TextView) findViewById(R.id.tv_show_msg);
 
         but_register.setOnClickListener(this);
-        but_cancel.setOnClickListener(this);
+    }
+
+    private void initMenu() {
+        TopMenuHeader topMenu = new TopMenuHeader(getWindow().getDecorView());
+        topMenu.topMenuTitle.setText("注 册");
+        topMenu.topMenuTitle.setTextSize(20);
+        topMenu.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenu.topMenuLeft.setText("登录");
+        topMenu.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenu.topMenuRight.setVisibility(View.GONE);
+        topMenu.topMenuLeft.setOnClickListener(this);
+        topMenu.ivTopMenuLeft.setOnClickListener(this);
     }
 
     @Override
@@ -77,7 +91,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 }
                 break;
-            case R.id.but_cancel:
+            case R.id.top_menu_left:
+                finish();
+                break;
+            case R.id.iv_icon:
                 finish();
                 break;
         }

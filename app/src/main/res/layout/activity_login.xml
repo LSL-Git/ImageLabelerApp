@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,8 +14,13 @@
         android:gravity="center"/>
 
     <EditText
+        android:layout_marginTop="50dp"
         android:id="@+id/et_login_user_name"
         android:hint="用户名"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
         android:layout_width="match_parent"
@@ -24,6 +30,10 @@
         android:id="@+id/et_login_user_psw"
         android:hint="密码"
         android:inputType="textPassword"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
@@ -68,6 +78,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
         android:layout_width="match_parent"
@@ -78,6 +89,9 @@
             android:text="登录"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:textSize="18sp"
+            android:textColor="@color/write"
+            android:background="@drawable/but_search_bg"
             android:layout_height="match_parent" />
 
         <Button
@@ -85,6 +99,9 @@
             android:text="注册"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:textSize="18sp"
+            android:textColor="@color/write"
+            android:background="@drawable/but_search_bg"
             android:layout_height="match_parent" />
     </LinearLayout>
 

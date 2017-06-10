@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="用户注册"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:layout_marginTop="50sp"
-        android:gravity="center"/>
+    <include layout="@layout/public_header"/>
 
     <EditText
         android:id="@+id/et_register_user_name"
         android:hint="新用户名"
-        android:layout_marginTop="20sp"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
+        android:layout_marginTop="70sp"
         android:layout_marginLeft="40sp"
         android:layout_marginRight="40sp"
         android:layout_width="match_parent"
@@ -24,6 +23,10 @@
     <EditText
         android:id="@+id/et_register_user_tel"
         android:hint="联系方式"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
         android:inputType="phone"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
@@ -34,6 +37,10 @@
     <EditText
         android:id="@+id/et_register_user_psw"
         android:hint="新密码"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
         android:inputType="textPassword"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
@@ -44,6 +51,10 @@
     <EditText
         android:id="@+id/et_register_user_rpsw"
         android:hint="确认密码"
+        android:background="@color/write"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:maxLines="1"
         android:inputType="textPassword"
         android:layout_marginTop="20sp"
         android:layout_marginLeft="40sp"
@@ -52,6 +63,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/tv_show_msg"
         android:gravity="center"
         android:textSize="20sp"
@@ -62,23 +74,20 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_marginLeft="40sp"
-        android:layout_marginRight="40sp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <Button
             android:id="@+id/but_register"
-            android:text="注册"
+            android:text="注 册"
+            android:textSize="18sp"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:textColor="@color/write"
+            android:background="@drawable/but_search_bg"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/but_cancel"
-            android:text="取消"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>
