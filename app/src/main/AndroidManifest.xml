@@ -69,6 +69,10 @@
                   android:label="显示搜索图片结果"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".lsl.activity.ShowPicInfoActivity"
+                  android:label="显示图片标签化信息"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

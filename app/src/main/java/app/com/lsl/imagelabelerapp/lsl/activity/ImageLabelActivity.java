@@ -71,7 +71,6 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
         intent = getIntent();
         img_url = intent.getStringExtra("img_url");
 
-//        Log.e("img_rul","url: " + img_url);
     }
 
     @Override

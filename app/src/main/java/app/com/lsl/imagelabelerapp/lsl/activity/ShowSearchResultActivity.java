@@ -8,12 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import app.com.lsl.imagelabelerapp.R;
-import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
+import app.com.lsl.imagelabelerapp.lsl.adapter.PicAdapter;
 import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
 
 /** 显示搜索图片结果
@@ -25,7 +24,7 @@ public class ShowSearchResultActivity extends AppCompatActivity {
     private static final String TAG = "ShowSearchResultActivity";
 
     private RecyclerView search_recyclerView;
-    private ImageAdapter adapter;
+    private PicAdapter adapter;
     private String filePath;
     private String fileName;
     private int picNum;
@@ -74,7 +73,7 @@ public class ShowSearchResultActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.arg1 == 1) {
-                adapter = new ImageAdapter();
+                adapter = new PicAdapter();
                 search_recyclerView.setAdapter(adapter);
                 adapter.replaceAll(list);
             }
