@@ -4,9 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/public_header"/>
+
     <ListView
         android:id="@+id/lv_user_name_list"
         android:layout_width="match_parent"
+        android:background="@color/bg"
         android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>

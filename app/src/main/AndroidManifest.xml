@@ -46,7 +46,8 @@
                   android:label="管理员"/>
 
         <activity android:name=".lsl.activity.UserNameListActivity"
-                  android:label="所有用户名列表"/>
+                  android:label="所有用户名列表"
+                  android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".lsl.activity.UpLoadImgActivity"
                   android:label="上传图片"/>
