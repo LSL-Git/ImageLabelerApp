@@ -7,7 +7,9 @@ import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
@@ -24,6 +26,39 @@ public class DbUtils {
     private static final String TAG = "DbUtils";
     private static String picPath ;
 
+    /**
+     * 获取完成标签化时间
+     * @param picName
+     */
+    public static String GetFinishTime(String picName) {
+        String finishTime = "2017-06-11 14:32:45.0";
+        List<PicTable> picList = DataSupport.select("FinishTime")
+                .where("picName = ?", picName).find(PicTable.class);
+        if (picList.size() != 0) {
+            for (PicTable pic : picList) {
+                finishTime = pic.getFinishTime();
+            }
+        }
+        return finishTime;
+    }
+
+    /**
+     * 获取图片的所有标签
+     * @param picName
+     */
+    public static Map<String, String> GetPicLabels(String picName, int no) {
+        List<PicTable> picList = DataSupport.select("PicLabel")
+                .where("picName = ?", picName).find(PicTable.class);
+
+        Map<String, String> map = new HashMap<>();
+        if (picList.size() != 0) {
+            for (PicTable pic : picList) {
+                map.put("label" + no++, pic.getPicLabel());
+            }
+        }
+        map.put("no", no + "");
+        return map;
+    }
 
     /**
      * 根据图片类型获取图片所有名称

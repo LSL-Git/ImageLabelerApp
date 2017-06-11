@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,8 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
 import okhttp3.Call;
 
 /** 显示图片标签化的标签信息
@@ -45,6 +48,14 @@ public class ShowPicInfoActivity extends AppCompatActivity {
         intent = getIntent();
         img_url = intent.getStringExtra("img_url");
 
+        Log.e(TAG, img_url);
+        urls = img_url.split("/");
+
+        fileName = urls[urls.length - 1];// 得到图片名称
+        tv_pic_name.setText(fileName);  // 显示图片名称
+        tv_pic_label_time.setText(DbUtils.GetFinishTime(fileName)); // 显示完成标签化时间
+        tv_pic_labels.setText(StrUtils.GetLabelsStr(urls));
+
         // 根据图片URL  加载显示整张大图片
         OkHttpUtils.get().url(img_url).tag(this).build().connTimeOut(20000)
                 .readTimeOut(20000).writeTimeOut(20000).execute(new BitmapCallback() {
@@ -58,9 +69,6 @@ public class ShowPicInfoActivity extends AppCompatActivity {
             }
         });
 
-        urls = img_url.split("/");
-        fileName = urls[urls.length - 1];
-        tv_pic_name.setText(fileName);
     }
 
     private void initViews() {

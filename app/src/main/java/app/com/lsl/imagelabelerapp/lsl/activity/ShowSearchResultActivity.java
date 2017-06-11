@@ -1,6 +1,7 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,10 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import java.util.ArrayList;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.adapter.PicAdapter;
 import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
 
@@ -19,7 +22,7 @@ import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
  * Created by M1308_000 on 2017/6/10.
  */
 
-public class ShowSearchResultActivity extends AppCompatActivity {
+public class ShowSearchResultActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "ShowSearchResultActivity";
 
@@ -44,6 +47,20 @@ public class ShowSearchResultActivity extends AppCompatActivity {
         thread.start(); // 启动线程加载数据
 
         initViews();
+
+        initMenu();
+    }
+
+    private void initMenu() {
+        TopMenuHeader topMenuHeader = new TopMenuHeader(getWindow().getDecorView());
+        topMenuHeader.topMenuTitle.setText(fileName);
+        topMenuHeader.topMenuTitle.setTextSize(20);
+        topMenuHeader.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuLeft.setText("返回");
+        topMenuHeader.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuRight.setVisibility(View.GONE);
+        topMenuHeader.topMenuLeft.setOnClickListener(this);
+        topMenuHeader.ivTopMenuLeft.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -79,4 +96,16 @@ public class ShowSearchResultActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.top_menu_left:
+                finish();
+                break;
+            case R.id.iv_icon:
+                finish();
+                break;
+        }
+    }
 }

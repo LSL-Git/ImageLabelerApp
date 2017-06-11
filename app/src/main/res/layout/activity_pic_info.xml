@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="图片名称:" />
+                    android:text="图片名称: " />
 
                 <TextView
                     android:id="@+id/tv_pic_name"
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="完成时间:" />
+                    android:text="完成时间: " />
 
                 <TextView
                     android:id="@+id/tv_pic_label_success_time"

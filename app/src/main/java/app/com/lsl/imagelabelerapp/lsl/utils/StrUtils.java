@@ -1,5 +1,7 @@
 package app.com.lsl.imagelabelerapp.lsl.utils;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -8,12 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
+/** 字符串工具类
  * Created by M1308_000 on 2017/4/29.
  */
 
 public class StrUtils {
 
+    public static final String TAG = "StrUtils";
+
+    /**
+     * 将所有标签拼接
+     * @param urls
+     * @return
+     */
+    public static String GetLabelsStr(String[] urls) {
+        String picName = urls[urls.length - 1];
+        String labels = "";
+        int j = 1;
+        for (int i = 7; i < urls.length - 2; i++,j++) {
+            labels +=  "label" + j + ": " + urls[i] + "\n";
+        }
+
+        Map<String,String> map = DbUtils.GetPicLabels(picName, j);
+        int no = Integer.parseInt(map.get("no"));
+        int num = map.size() - 1;
+        int noo = no - 1;
+        for (int i = 0; i < num; i++) {
+            labels += "label" + noo + ": " + map.get("label" + noo) + "\n";
+            noo++;
+        }
+        Log.e(TAG, labels);
+        return labels;
+    }
 
     /**
      * 将图片名称，文件路径，和http URL 拼装成完整 URL

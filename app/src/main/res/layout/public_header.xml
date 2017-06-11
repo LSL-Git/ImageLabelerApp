@@ -19,12 +19,14 @@
         android:layout_height="45dp" />
 
     <!-- 左手边按钮，设置内部重心偏向为垂直居中 -->
-    <Button
+    <TextView
+        android:clickable="true"
         android:id="@+id/top_menu_left"
-        android:layout_width="45dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="left"
         android:textSize="18sp"
+        android:paddingTop="13dp"
         android:background="@color/write"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/iv_icon"
@@ -48,10 +50,13 @@
 
     <!-- 按钮控件，设置布局为偏右 -->
 
-    <Button
+    <TextView
+        android:clickable="true"
         android:id="@+id/top_menu_right"
-        android:layout_width="45dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:paddingTop="13dp"
+        android:textSize="18sp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@color/write"
