@@ -1,7 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.activity.menu;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ public class TopMenuHeader {
     public TextView topMenuLeft;
 
     // 顶部菜单右边按钮
-    public TextView topMenuRight;
+    public ImageView topMenuRight;
 
     // 顶部菜单文字
     public TextView topMenuTitle;
@@ -30,7 +29,7 @@ public class TopMenuHeader {
         ivTopMenuLeft = (ImageView) v.findViewById(R.id.iv_icon);
 
         // 右边按钮
-        topMenuRight = (TextView) v.findViewById(R.id.top_menu_right);
+        topMenuRight = (ImageView) v.findViewById(R.id.top_menu_right);
 
         // 左边按钮
         topMenuLeft = (TextView) v.findViewById(R.id.top_menu_left);

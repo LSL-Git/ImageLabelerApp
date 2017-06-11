@@ -1,6 +1,7 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,12 @@ import android.widget.Toast;
 
 import com.sleepyzzz.photo_selector.activity.PhotoPickerActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
+import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 import static android.widget.Toast.makeText;
 
@@ -33,7 +39,31 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_manager);
         AppActivities.addActivity(this);
         initLayout();
+        initMenu();
+        initData();
+    }
 
+    private void initMenu() {
+        TopMenuHeader topMenuHeader = new TopMenuHeader(getWindow().getDecorView());
+        topMenuHeader.topMenuTitle.setText("管理员");
+        topMenuHeader.topMenuTitle.setTextSize(20);
+        topMenuHeader.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuLeft.setText("返回");
+        topMenuHeader.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuRight.setVisibility(View.GONE);
+        topMenuHeader.topMenuLeft.setOnClickListener(this);
+        topMenuHeader.ivTopMenuLeft.setOnClickListener(this);
+    }
+
+
+    /**
+     * 加载网络数据
+     */
+    private void initData() {
+        Map<String,String> map = new HashMap<>();
+        map.put("type","get_all_user_name");
+        String TYPE = "userinfo";
+        new Thread(new HttpUtils(map, TYPE)).start();
     }
 
     /**
@@ -68,6 +98,13 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
                 // 图片上传的服务器地址
                 PhotoPickerActivity.actionStart(ManagerActivity.this, 10, null, url);
                 break;
+            case R.id.iv_icon:
+                finish();
+                break;
+            case R.id.top_menu_left:
+                finish();
+                break;
+
         }
     }
 }

@@ -15,6 +15,22 @@ public class JsonUtils {
     private static final String DATA = "data";
     private static int count;
 
+
+    public static void UserName(Object data) throws JSONException {
+        JSONObject json = new JSONObject(data.toString());
+        int count = json.getInt(COUNT);
+        JSONObject name_json = json.getJSONObject(DATA);
+        for (int i = count; i > 0; i--) {
+            DbUtils.SaveAllUserName(name_json.getString("user_name" + i));
+        }
+    }
+
+    /**
+     * 解析图片信息
+     * @param fileName
+     * @param data
+     * @throws JSONException
+     */
     public static void SavePicInfo(String fileName,Object data) throws JSONException {
         JSONObject json = new JSONObject(data.toString());
         int count = json.getInt(COUNT);

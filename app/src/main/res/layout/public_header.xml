@@ -50,15 +50,15 @@
 
     <!-- 按钮控件，设置布局为偏右 -->
 
-    <TextView
+    <ImageView
         android:clickable="true"
         android:id="@+id/top_menu_right"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:paddingTop="13dp"
-        android:textSize="18sp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="11dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:src="@mipmap/yes"
         android:background="@color/write"
         android:textColor="@color/colorPrimaryDark" />
 

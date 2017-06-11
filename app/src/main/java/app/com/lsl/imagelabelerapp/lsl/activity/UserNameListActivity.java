@@ -1,5 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.adapter.UserListAdapter;
 import app.com.lsl.imagelabelerapp.lsl.model.UserList;
+import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 
 /** 所有用户名列表
  * Created by M1308_000 on 2017/5/19.
@@ -37,7 +38,7 @@ public class UserNameListActivity extends AppCompatActivity implements View.OnCl
 
         lv_user_name = (ListView) findViewById(R.id.lv_user_name_list);
 
-        userLists = initData();
+        userLists = DbUtils.GetAllUserName();
         userListAdapter = new UserListAdapter(this, userLists);
 
         lv_user_name.setAdapter(userListAdapter);
@@ -46,7 +47,9 @@ public class UserNameListActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv_userName = (TextView) view.findViewById(R.id.tv_user_list_item_name);
-                Toast.makeText(UserNameListActivity.this, "" + tv_userName.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UserNameListActivity.this, mUserInfoActivity.class);
+                intent.putExtra("userName",tv_userName.getText().toString());
+                startActivity(intent);
             }
         });
 

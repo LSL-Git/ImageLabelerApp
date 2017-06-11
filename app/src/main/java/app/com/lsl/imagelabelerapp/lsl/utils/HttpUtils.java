@@ -69,16 +69,18 @@ public class HttpUtils implements Runnable{
             super.handleMessage(msg);
             String type = map.get("type");
             String fileName = map.get("fileName");
-            Log.e(TAG, msg.obj.toString());
-            Log.e(TAG, type);
             try {
                 if (type.equals("GetFileInfo")) {
                     JsonUtils.SaveFileInfo(msg.obj);
+
                 } else if (type.equals("GetPicInfo")) {
                     JsonUtils.SavePicInfo(fileName,msg.obj);
+
+                } else if (type.equals("get_all_user_name")) {
+                    JsonUtils.UserName(msg.obj);
                 }
             } catch (JSONException e) {
-            e.printStackTrace();
+                e.printStackTrace();
             }
 
         }

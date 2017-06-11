@@ -11,11 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.AllUserNameTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
+import app.com.lsl.imagelabelerapp.lsl.model.UserList;
 
 /** 数据库操作类
  * Created by M1308_000 on 2017/5/19.
@@ -25,6 +28,79 @@ public class DbUtils {
 
     private static final String TAG = "DbUtils";
     private static String picPath ;
+
+    /**
+     * 获取所有用户名
+     * @return
+     */
+    public static ArrayList<UserList> GetAllUserName() {
+        ArrayList<UserList> lists = new ArrayList<>();
+        List<AllUserNameTb> nameTbList = DataSupport.select("userName").find(AllUserNameTb.class);
+        if (nameTbList.size() != 0) {
+            for (AllUserNameTb name : nameTbList) {
+                lists.add(new UserList(getIconId(), name.getUserName()));
+            }
+        }
+        return lists;
+    }
+
+    /**
+     * 获取图片id
+     * @return
+     */
+    private static int getIconId() {
+        int i = (int) (1 + Math.random() * 10);
+        int icon = 0;
+        switch (i) {
+            case 1:
+                icon = R.mipmap.icon1;
+                break;
+            case 2:
+                icon = R.mipmap.icon2;
+                break;
+            case 3:
+                icon = R.mipmap.icon3;
+                break;
+            case 4:
+                icon = R.mipmap.icon4;
+                break;
+            case 5:
+                icon = R.mipmap.icon5;
+                break;
+            case 6:
+                icon = R.mipmap.icon6;
+                break;
+            case 7:
+                icon = R.mipmap.icon7;
+                break;
+            case 8:
+                icon = R.mipmap.icon8;
+                break;
+            case 9:
+                icon = R.mipmap.icon9;
+                break;
+            case 10:
+                icon = R.mipmap.icon10;
+                break;
+        }
+        return icon;
+    }
+
+    /**
+     * 保存所有用户昵称
+     * @param userName
+     */
+    public static void SaveAllUserName(String userName) {
+        AllUserNameTb userNameTb = new AllUserNameTb();
+        List<AllUserNameTb> allUserNameTbs = DataSupport.select("userName")
+                .where("userName = ?", userName).find(AllUserNameTb.class);
+        if (allUserNameTbs.size() == 0) {
+            userNameTb.setUserName(userName);
+            if (userNameTb.save()) {
+                Log.e(TAG, "user name save success");
+            }
+        }
+    }
 
     /**
      * 获取完成标签化时间

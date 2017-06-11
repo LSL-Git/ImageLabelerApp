@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/public_header"/>
+
     <Button
         android:id="@+id/but_check_users_info"
         android:text="查看用户信息"
