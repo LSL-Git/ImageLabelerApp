@@ -10,8 +10,8 @@
         android:layout_marginLeft="15dp"
         android:src="@mipmap/icon"
         android:layout_marginTop="5dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp" />
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/tv_user_list_item_name"
@@ -21,10 +21,10 @@
         android:gravity="center_vertical"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="80dp" />
+        android:layout_height="60dp" />
 
     <ImageView
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="20dp"
         android:src="@mipmap/hall_list_arrow"
         android:layout_width="wrap_content"

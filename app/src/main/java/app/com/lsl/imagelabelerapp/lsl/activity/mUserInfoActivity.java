@@ -47,6 +47,10 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
     private String user_name;
     private TopMenuHeader topMenuHeader;
     private static int is_manager;
+    private String email;
+    private String tel;
+    private String is_m;
+    private String manager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +114,20 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
     public void ShowBackMsg(Object obj) {
         Log.e(TAG, obj.toString());
         try {
+            JSONObject rjson = new JSONObject(obj.toString());
+            String RESULT = rjson.getString("result");
+            if (RESULT.equals("Update_Success")) {
+                Toast.makeText(this, "save success...", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "save fail...", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
             JSONObject json = new JSONObject(obj.toString());
             iv_userIcon.setImageResource(R.mipmap.icon10);
             tv_userName.setText("昵称  " + json.getString("user_name"));
@@ -135,7 +153,18 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top_menu_right:
-                Toast.makeText(this,"save...", Toast.LENGTH_SHORT).show();
+                tel = tv_userTel.getText().toString().trim();
+                email = tv_userEmail.getText().toString().trim();
+                is_m = tv_userGrantSess.getText().toString().trim();
+                manager = is_m.substring(is_m.length() - 3, is_m.length());
+                Map<String,String> map = new HashMap<>();
+                map.put("user_name", user_name);
+                map.put("update_tel",tel);
+                map.put("update_email",email);
+                map.put("manager",manager);
+                map.put("type","update");
+                new UserPresenter(mUserInfoActivity.this, map, "userinfo").fetch();
+
                 break;
             case R.id.top_menu_left:
                 finish();

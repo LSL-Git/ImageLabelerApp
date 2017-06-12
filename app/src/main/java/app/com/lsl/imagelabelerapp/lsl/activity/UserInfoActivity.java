@@ -15,7 +15,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
@@ -45,8 +45,6 @@ import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.USER_TEL;
 
 public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener, UserView {
 
-    private Button but_info_save;
-    private Button but_cancel;
     private SharedPreferences spf;
     private ImageView iv_info_icon;
     private TextView tv_info_name;
@@ -58,11 +56,27 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private String types = "";
     private TextView tv_info_alter_psw;
 
+    private TopMenuHeader topMenuHeader;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         initLayout();
+        initMenu();
+    }
+
+    private void initMenu() {
+        topMenuHeader = new TopMenuHeader(getWindow().getDecorView());
+        topMenuHeader.topMenuTitle.setText("我的信息");
+        topMenuHeader.topMenuTitle.setTextSize(20);
+        topMenuHeader.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuLeft.setText("返回");
+        topMenuHeader.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuRight.setVisibility(View.GONE);
+        topMenuHeader.topMenuRight.setOnClickListener(this);
+        topMenuHeader.topMenuLeft.setOnClickListener(this);
+        topMenuHeader.ivTopMenuLeft.setOnClickListener(this);
     }
 
     private void initLayout() {
@@ -74,8 +88,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         tv_info_integral = (TextView) findViewById(R.id.tv_userinfo_integral);
         tv_info_task = (TextView) findViewById(R.id.tv_userinfo_task);
         tv_info_alter_psw = (TextView) findViewById(R.id.tv_userinfo_alter_psw);
-        but_cancel = (Button) findViewById(R.id.but_info_save);
-        but_info_save = (Button) findViewById(R.id.but_info_cancel);
+
 
         // 从spf文件中读取用户信息并显示出来
         spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
@@ -89,8 +102,6 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
             iv_info_icon.setImageBitmap(bitmap);
         }
 
-        but_cancel.setOnClickListener(this);
-        but_info_save.setOnClickListener(this);
         tv_info_tel.setOnClickListener(this);
         tv_info_email.setOnClickListener(this);
         tv_info_alter_psw.setOnClickListener(this);
@@ -100,7 +111,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.but_info_save:
+            case R.id.top_menu_right:
                 // 执行修改用户信息的业务
                 String origin_tel = spf.getString(USER_TEL, "");
                 String origin_email = spf.getString(USER_EMAIL,"");
@@ -117,7 +128,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(UserInfoActivity.this,"信息尚未改变",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.but_info_cancel:
+            case R.id.top_menu_left:
+            case R.id.iv_icon:
                 finish();
                 break;
             case R.id.tv_userinfo_tel:
@@ -155,22 +167,26 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     tv.setText(inText.getText().toString());
                     tv.setTextColor(Color.BLUE);
+                    topMenuHeader.topMenuRight.setVisibility(View.VISIBLE);
                 }
             }
         });
         builder.show();
     }
 
-
     @Override
     public void ShowLoading() {
-
+        Toast.makeText(this,"save...",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
         try {
             if (JsonUtils.LoginAndRegisterJson(obj.toString()).equals("Update_Success")) {
+                SharedPreferences.Editor editor = spf.edit();
+                editor.putString(USER_TEL, tv_info_tel.getText().toString().trim());
+                editor.putString(USER_EMAIL, tv_info_email.getText().toString().trim());
+                editor.commit();
                 Toast.makeText(UserInfoActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
                 finish();
             } else {
