@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,7 +45,6 @@ import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
-import static app.com.lsl.imagelabelerapp.lsl.activity.BuilderManager.getHamButtonBuilder;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
 
@@ -89,21 +90,57 @@ public class MainActivity extends AppCompatActivity
        // 加载控件
         initLayout();
 
+        initBoomMenu();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+    }
+
+    private void initBoomMenu() {
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
         assert bmb != null;
         bmb.setButtonEnum(ButtonEnum.Ham);
         bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
         bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
-        bmb.addBuilder(BuilderManager.getHamButtonBuilder());
-        bmb.clearBuilders();
-        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            bmb.addBuilder(getHamButtonBuilder());
-        }
+        bmb.addBuilder(BuilderManager.getHamButtonBuilder("今日任务","Today's mission"));
+        bmb.addBuilder(BuilderManager.getHamButtonBuilder("猜你喜欢","Guess you like it"));
+        bmb.addBuilder(BuilderManager.getHamButtonBuilder("其他","Other"));
+        //bmb.addBuilder(BuilderManager.getHamButtonBuilder("今日标签","Label history today"));
+
+        // 动态加载菜单内容
+//        bmb.clearBuilders();
+//        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+//            bmb.addBuilder(getHamButtonBuilder());
+//        }
 
         bmb.setOnBoomListener(new OnBoomListener() {
+            Snackbar snackbar = Snackbar.make(bmb,"今日完成 1/20", Snackbar.LENGTH_INDEFINITE);
+
             @Override
             public void onClicked(int index, BoomButton boomButton) {
-                Toast.makeText(MainActivity.this, "onClicked : " + index  , Toast.LENGTH_LONG).show();
+                snackbar.dismiss();
+                switch (index) {
+                    case 0:
+                        ShowImages(GetImgUrl());    // 加载今日任务的图片
+                        break;
+                    case 1:
+                        ShowImages(getData());      // 加载猜你喜欢的图片
+                        break;
+                    case 2:
+//                        View view = boomButton.getSubTextView();
+//                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                                .setAction("Action", null).show();
+                        ShowImages(getData());      // 加载猜其他图片
+                        break;
+                }
+
             }
 
             @Override
@@ -128,30 +165,16 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onBoomDidShow() {
-                //Toast.makeText(HamButtonActivity.this, "onBoomDidShow..."  , Toast.LENGTH_LONG).show();
+                snackbar.show();
+                snackbar.setActionTextColor(Color.parseColor("#00FF00"));
+                snackbar.setAction("查看", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "onClicked"  , Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
     }
 
     // 加载数据
@@ -164,14 +187,7 @@ public class MainActivity extends AppCompatActivity
         // 找到头像id 并设置点击监听
         headerView = navigationView.getHeaderView(0);
 
-        // 流布局图片显示部分
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-        adapter = new ImageAdapter();
-        recyclerView.setAdapter(adapter);
-        adapter.replaceAll(GetImgUrl());
-        // 流布局图片显示部分
+        ShowImages(GetImgUrl());// 根据图片资源列表改变图片内容
 
         iv_user_icon = (ImageView) headerView.findViewById(R.id.iv_user_icon);
         tv_user_status = (TextView) headerView.findViewById(R.id.tv_status);
@@ -181,6 +197,21 @@ public class MainActivity extends AppCompatActivity
 
         iv_user_icon.setOnClickListener(this);
 
+    }
+
+    /**
+     * 根据list显示图片
+     * @param list
+     */
+    private void ShowImages(ArrayList<String> list) {
+        // 流布局图片显示部分
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        adapter = new ImageAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.replaceAll(list);
+        // 流布局图片显示部分
     }
 
     // 加载数据
@@ -209,7 +240,6 @@ public class MainActivity extends AppCompatActivity
      */
     public ArrayList<String> getData() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("http://192.168.1.101:8080/ImageServer/servlet/LoadImage/i.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760755_6715.jpeg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760724_2371.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760707_4653.jpg");
@@ -217,14 +247,13 @@ public class MainActivity extends AppCompatActivity
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760706_9279.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760704_2341.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760704_5707.jpg");
-        list.add("http://192.168.1.101/webServer/LoadImage/商场15.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760685_4444.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760684_8827.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760683_3691.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760683_7315.jpg");
         list.add("http://img.my.csdn.net/uploads/201508/05/1438760663_7318.jpg");
-        list.add("http://192.168.1.101:8080/ImageServer/servlet/LoadImage/i.jpg");
-        list.add("http://192.168.1.101:8080/ImageServer/servlet/LoadImage/i.jpg");
+        list.add("http://img.my.csdn.net/uploads/201508/05/1438760663_7318.jpg");
+        list.add("http://img.my.csdn.net/uploads/201508/05/1438760663_7318.jpg");
         return list;
     }
 
