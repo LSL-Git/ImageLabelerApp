@@ -1,1 +1,1 @@
-include ':app', ':photo-selector', ':circleimageview'
+include ':app', ':photo-selector', ':circleimageview', ':boommenu'

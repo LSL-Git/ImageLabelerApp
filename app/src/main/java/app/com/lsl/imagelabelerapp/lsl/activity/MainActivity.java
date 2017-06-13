@@ -6,9 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +23,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nightonke.boommenu.BoomButtons.BoomButton;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.OnBoomListener;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -38,6 +43,7 @@ import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.activity.BuilderManager.getHamButtonBuilder;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
 
@@ -52,6 +58,9 @@ public class MainActivity extends AppCompatActivity
     private TextView tv_user_name;
     private TextView tv_user_status;
     private String user_name;
+    private BoomMenuButton bmb;
+
+
     private SharedPreferences spf;
     public static final String USER_ID = "user_id";		// 用户id
     public static final String USER_NAME = "user_name";	// 用户名
@@ -80,18 +89,62 @@ public class MainActivity extends AppCompatActivity
        // 加载控件
         initLayout();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        bmb = (BoomMenuButton) findViewById(R.id.bmb);
+        assert bmb != null;
+        bmb.setButtonEnum(ButtonEnum.Ham);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
+        bmb.addBuilder(BuilderManager.getHamButtonBuilder());
+        bmb.clearBuilders();
+        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+            bmb.addBuilder(getHamButtonBuilder());
+        }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        bmb.setOnBoomListener(new OnBoomListener() {
             @Override
-            public void onClick(View view) {
+            public void onClicked(int index, BoomButton boomButton) {
+                Toast.makeText(MainActivity.this, "onClicked : " + index  , Toast.LENGTH_LONG).show();
+            }
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            @Override
+            public void onBackgroundClick() {
+                //Toast.makeText(HamButtonActivity.this, "onBackgroundClick"  , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onBoomWillHide() {
+                //Toast.makeText(HamButtonActivity.this, "onBoomWillHide"  , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onBoomDidHide() {
+                //Toast.makeText(HamButtonActivity.this, "onBoomDidHide"  , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onBoomWillShow() {
+                //Toast.makeText(HamButtonActivity.this, "onBoomWillShow"  , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onBoomDidShow() {
+                //Toast.makeText(HamButtonActivity.this, "onBoomDidShow..."  , Toast.LENGTH_LONG).show();
             }
         });
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
