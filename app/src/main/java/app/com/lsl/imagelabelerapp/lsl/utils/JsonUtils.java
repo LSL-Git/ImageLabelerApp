@@ -16,6 +16,27 @@ public class JsonUtils {
     private static int count;
 
 
+    /**
+     * 解析任务图片信息
+     * @param data
+     * @throws JSONException
+     */
+    public static void TaskPicUrl(Object data) throws JSONException {
+        JSONObject json = new JSONObject(data.toString());
+        int count = json.length();
+        for (int i = 1; i <= count; i++) {
+            JSONObject da = json.getJSONObject(DATA + i);
+            String picName = da.getString("picName");
+            String picUrl = da.getString("picUrl");
+            int batch = da.getInt("batch");
+//            Log.e(TAG, "name:" + picName);
+//            Log.e(TAG, "url:" + picUrl);
+//            Log.e(TAG,"batch:" + batch);
+            DbUtils.SaveTaskPicInfo(picName, picUrl, batch, "NOP",DateUtils.getNowTime());
+        }
+
+    }
+
     public static void UserName(Object data) throws JSONException {
         JSONObject json = new JSONObject(data.toString());
         int count = json.getInt(COUNT);

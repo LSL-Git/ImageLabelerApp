@@ -18,6 +18,7 @@ import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.TaskPicUrlTb;
 import app.com.lsl.imagelabelerapp.lsl.model.UserList;
 
 /** 数据库操作类
@@ -28,6 +29,29 @@ public class DbUtils {
 
     private static final String TAG = "DbUtils";
     private static String picPath ;
+
+    /**
+     * 保存任务图片信息
+     * @param picName
+     * @param picUrl
+     * @param batch
+     * @param state
+     * @param nowTime
+     */
+    public static void SaveTaskPicInfo(String picName, String picUrl, int batch, String state, String nowTime) {
+        TaskPicUrlTb picUrlTb = new TaskPicUrlTb();
+        Cursor cursor = DataSupport.findBySQL("select picName,batch from TaskPicUrlTb where picName = '" + picName + "'" +
+                " and batch = " + batch);
+        if (cursor.getCount() == 0) {
+            picUrlTb.setPicName(picName);
+            picUrlTb.setPicUrl(picUrl);
+            picUrlTb.setBatch(batch);
+            picUrlTb.setState(state);
+            picUrlTb.setGetTaskTime(nowTime);
+            if (picUrlTb.save())
+                Log.e(TAG, "task pic url save success!");
+        }
+    }
 
     /**
      * 获取所有用户名

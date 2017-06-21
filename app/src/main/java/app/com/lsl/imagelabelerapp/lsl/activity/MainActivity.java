@@ -43,6 +43,7 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.task.GetTask;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
@@ -121,13 +122,13 @@ public class MainActivity extends AppCompatActivity
 //        }
 
         bmb.setOnBoomListener(new OnBoomListener() {
-            Snackbar snackbar = Snackbar.make(bmb,"今日完成 1/20", Snackbar.LENGTH_INDEFINITE);
-
+            Snackbar snackbar;
             @Override
             public void onClicked(int index, BoomButton boomButton) {
                 snackbar.dismiss();
                 switch (index) {
                     case 0:
+                        GetTask.getMyTask();
                         ShowImages(GetImgUrl());    // 加载今日任务的图片
                         break;
                     case 1:
@@ -140,7 +141,6 @@ public class MainActivity extends AppCompatActivity
                         ShowImages(getData());      // 加载猜其他图片
                         break;
                 }
-
             }
 
             @Override
@@ -160,11 +160,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onBoomWillShow() {
-                //Toast.makeText(HamButtonActivity.this, "onBoomWillShow"  , Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onBoomDidShow() {
+                snackbar = Snackbar.make(bmb,"今日完成 1/20", Snackbar.LENGTH_INDEFINITE);
                 snackbar.show();
                 snackbar.setActionTextColor(Color.parseColor("#00FF00"));
                 snackbar.setAction("查看", new View.OnClickListener() {
@@ -173,6 +169,11 @@ public class MainActivity extends AppCompatActivity
                         Toast.makeText(MainActivity.this, "onClicked"  , Toast.LENGTH_LONG).show();
                     }
                 });
+            }
+
+            @Override
+            public void onBoomDidShow() {
+
             }
         });
     }

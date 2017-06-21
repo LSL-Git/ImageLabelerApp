@@ -57,7 +57,8 @@
                   android:label="修改密码"/>
 
         <activity android:name=".lsl.activity.SetActivity"
-                  android:label="设置"/>
+                  android:label="设置"
+                  android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name="com.sleepyzzz.photo_selector.activity.PhotoPickerActivity"
                   android:label="图片多选择页面"

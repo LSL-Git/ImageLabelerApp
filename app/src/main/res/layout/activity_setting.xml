@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <include layout="@layout/public_header"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_1"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,6 +41,8 @@
     </LinearLayout>
 
     <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_below="@id/ll_1"
         android:background="#b8b8b8"
         android:layout_width="match_parent"
@@ -38,6 +51,8 @@
     <LinearLayout
         android:id="@+id/ll_2"
         android:layout_below="@id/ll_1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -61,7 +76,114 @@
     </LinearLayout>
 
     <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_below="@id/ll_2"
+        android:background="#b8b8b8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_3"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10sp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="left"
+            android:text="问题反馈"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@mipmap/hall_list_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll_3"
+        android:background="#b8b8b8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_4"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10sp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="left"
+            android:text="帮 助"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@mipmap/hall_list_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll_4"
+        android:background="#b8b8b8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/ll_5"
+        android:layout_below="@id/ll_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_about"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10sp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="left"
+            android:text="关 于"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@mipmap/hall_list_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/ll_5"
         android:background="#b8b8b8"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>

@@ -67,6 +67,7 @@ public class HttpUtils implements Runnable{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            Log.e(TAG,msg.obj.toString());
             String type = map.get("type");
             String fileName = map.get("fileName");
             try {
@@ -78,6 +79,8 @@ public class HttpUtils implements Runnable{
 
                 } else if (type.equals("get_all_user_name")) {
                     JsonUtils.UserName(msg.obj);
+                } else if (type.equals("GetTaskPicUrl")) {
+                    JsonUtils.TaskPicUrl(msg.obj);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
