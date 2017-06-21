@@ -31,6 +31,19 @@ public class DbUtils {
     private static String picPath ;
 
     /**
+     * 更新图片任务状态
+     * @param picName
+     * @param State
+     * @return
+     */
+    public static boolean UpdateTaskPicState(String picName, String State) {
+        TaskPicUrlTb picUrlTb = new TaskPicUrlTb();
+        picUrlTb.setState(State);
+        int r = picUrlTb.updateAll("picName = ?", picName);
+        return r > 0;
+    }
+
+    /**
      * 根据状态获取任务图片URL
      * @param State
      * @return

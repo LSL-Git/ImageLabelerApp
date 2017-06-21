@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include layout="@layout/public_header"/>
 
     <ImageView
         android:id="@+id/iv_show_image_one"
@@ -12,57 +15,322 @@
         android:src="@mipmap/icon"
         android:layout_height="0dp" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/et_label_one"
-            android:hint="标签1 如《动物》"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_label_two"
-            android:hint="标签2 如《犬类》"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_label_three"
-            android:hint="标签3 如《中华田园犬》"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/et_label_1"
+                    android:maxLines="1"
+                    android:hint="标签1/label1"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/et_label_four"
-            android:hint="标签4 如《土狗》"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <ImageView
+                    android:visibility="invisible"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
 
-    </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_2"
+                    android:maxLines="1"
+                    android:hint="标签2/label2"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_3"
+                    android:maxLines="1"
+                    android:hint="标签3/label3"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_4"
+                    android:maxLines="1"
+                    android:hint="标签4/label4"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/iv_add_et_4"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_5"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_5"
+                    android:maxLines="1"
+                    android:hint="标签5/label5"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_5"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_6"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_6"
+                    android:maxLines="1"
+                    android:hint="标签6/label6"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_6"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_7"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_7"
+                    android:maxLines="1"
+                    android:hint="标签7/label7"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_7"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_8"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_8"
+                    android:maxLines="1"
+                    android:hint="标签8/label8"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_8"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_9"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_9"
+                    android:maxLines="1"
+                    android:hint="标签9/label9"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_9"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_et_10"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:enabled="false"
+                    android:id="@+id/et_label_10"
+                    android:maxLines="1"
+                    android:hint="标签10/label10"
+                    android:background="@drawable/et_radius"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:id="@+id/iv_add_et_10"
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ouv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
-    <LinearLayout
-        android:layout_marginLeft="40sp"
-        android:layout_marginRight="40sp"
+    <Button
+        android:id="@+id/but_YES_label"
+        android:text="确定标签"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/but_YES_label"
-            android:text="确定标签"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/but_cancel_label"
-            android:text="取消标签"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 </LinearLayout>
