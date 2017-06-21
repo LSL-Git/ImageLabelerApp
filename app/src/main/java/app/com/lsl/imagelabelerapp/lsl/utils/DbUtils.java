@@ -31,6 +31,22 @@ public class DbUtils {
     private static String picPath ;
 
     /**
+     * 根据状态获取任务图片URL
+     * @param State
+     * @return
+     */
+    public static ArrayList<String> GetTaskPicUrl(String State) {
+        ArrayList<String> list = new ArrayList<>();
+        List<TaskPicUrlTb> urlTbList = DataSupport.select("picUrl").where("State = ?", State).find(TaskPicUrlTb.class);
+        if (urlTbList.size() > 0) {
+            for (TaskPicUrlTb url : urlTbList) {
+                list.add(url.getPicUrl());
+            }
+        }
+        return list;
+    }
+
+    /**
      * 保存任务图片信息
      * @param picName
      * @param picUrl

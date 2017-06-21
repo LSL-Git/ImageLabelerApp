@@ -43,9 +43,9 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
-import app.com.lsl.imagelabelerapp.lsl.task.GetTask;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getTaskPicUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
 
@@ -128,17 +128,16 @@ public class MainActivity extends AppCompatActivity
                 snackbar.dismiss();
                 switch (index) {
                     case 0:
-                        GetTask.getMyTask();
-                        ShowImages(GetImgUrl());    // 加载今日任务的图片
+                        ShowImages(getTaskPicUrl());    // 加载今日任务的图片
                         break;
                     case 1:
-                        ShowImages(getData());      // 加载猜你喜欢的图片
+                        ShowImages(GetImgUrl());      // 加载猜你喜欢的图片
                         break;
                     case 2:
 //                        View view = boomButton.getSubTextView();
 //                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                                .setAction("Action", null).show();
-                        ShowImages(getData());      // 加载猜其他图片
+                        ShowImages(GetImgUrl());      // 加载猜其他图片
                         break;
                 }
             }
