@@ -54,7 +54,8 @@
                   android:label="上传图片"/>
 
         <activity android:name=".lsl.activity.AlterPswActivity"
-                  android:label="修改密码"/>
+                  android:label="修改密码"
+                  android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".lsl.activity.SetActivity"
                   android:label="设置"

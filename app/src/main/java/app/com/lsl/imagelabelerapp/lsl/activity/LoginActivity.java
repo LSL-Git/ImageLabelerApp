@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_user_psw;
     private EditText et_user_name;
     private CheckBox cb_is_remeber_psw;
-    private Button but_to_register;
     private TextView tv_show_login_msg;
     private CheckBox cb_auto_login;
     private SharedPreferences spf;
@@ -55,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public static String IS_REMEMBER = "IS_REMEMBER";
     public static String USER_NAME = "USER_NAME";
     public static String PASSWORD = "PASSWORD";
+    private TextView tv_register;
+    private TextView tv_forget;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +109,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         but_login = (Button) findViewById(R.id.but_login);
-        but_to_register = (Button) findViewById(R.id.but_to_register);
+        tv_register = (TextView) findViewById(R.id.tv_register);
+        tv_forget = (TextView) findViewById(R.id.tv_forget_psw);
         cb_is_remeber_psw = (CheckBox) findViewById(R.id.cb_login_remember_psw);
         cb_auto_login = (CheckBox) findViewById(R.id.cb_auto_login);
         et_user_name = (EditText) findViewById(R.id.et_login_user_name);
@@ -116,7 +118,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tv_show_login_msg = (TextView) findViewById(R.id.tv_show_msg_login);
 
         but_login.setOnClickListener(this);
-        but_to_register.setOnClickListener(this);
+        tv_register.setOnClickListener(this);
+        tv_forget.setOnClickListener(this);
 
         cb_is_remeber_psw.setOnCheckedChangeListener(this);
         cb_auto_login.setOnCheckedChangeListener(this);
@@ -154,9 +157,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
 
-            case R.id.but_to_register:
+            case R.id.tv_register:
                 Intent intent2 = new Intent(this,RegisterActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.tv_forget_psw:
+                Toast.makeText(LoginActivity.this, "click...", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

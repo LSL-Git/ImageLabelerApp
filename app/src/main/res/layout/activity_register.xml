@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/et_register_user_name"
         android:hint="新用户名"
-        android:background="@color/write"
+        android:background="@drawable/et_radius2"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:maxLines="1"
@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/et_register_user_tel"
         android:hint="联系方式"
-        android:background="@color/write"
+        android:background="@drawable/et_radius2"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:maxLines="1"
@@ -37,7 +37,7 @@
     <EditText
         android:id="@+id/et_register_user_psw"
         android:hint="新密码"
-        android:background="@color/write"
+        android:background="@drawable/et_radius2"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:maxLines="1"
@@ -51,7 +51,7 @@
     <EditText
         android:id="@+id/et_register_user_rpsw"
         android:hint="确认密码"
-        android:background="@color/write"
+        android:background="@drawable/et_radius2"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:maxLines="1"

@@ -2,13 +2,13 @@ package app.com.lsl.imagelabelerapp.lsl.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,9 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 
+import static app.com.lsl.imagelabelerapp.R.id.iv_icon;
+import static app.com.lsl.imagelabelerapp.R.id.top_menu_left;
+import static app.com.lsl.imagelabelerapp.R.id.top_menu_right;
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.IS_REMEMBER;
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.PASSWORD;
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.SPF_USERINFO;
@@ -33,19 +37,19 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
     private EditText et_new_rpsw;
     private EditText et_new_psw;
     private EditText et_origin_psw;
-    private Button but_alter_psw_save;
-    private Button but_alter_psw_cancel;
     private String TYPE = "alter_psw";
     private SharedPreferences spf;
     private String in_origin_psw;
     private String in_new_psw;
     private String in_new_rpsw;
+    private TopMenuHeader topMenuHeader;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alter_psw);
         initLayout();
+        initMenu();
     }
 
     private void initLayout() {
@@ -53,17 +57,25 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
         et_origin_psw = (EditText) findViewById(R.id.et_origin_psw);
         et_new_psw = (EditText) findViewById(R.id.et_new_psw);
         et_new_rpsw = (EditText) findViewById(R.id.et_new_rpsw);
-        but_alter_psw_save = (Button) findViewById(R.id.but_alter_psw_save);
-        but_alter_psw_cancel = (Button) findViewById(R.id.but_alter_psw_cancel);
 
-        but_alter_psw_cancel.setOnClickListener(this);
-        but_alter_psw_save.setOnClickListener(this);
+    }
+
+    private void initMenu() {
+        topMenuHeader = new TopMenuHeader(getWindow().getDecorView());
+        topMenuHeader.topMenuTitle.setText("修改密码");
+        topMenuHeader.topMenuTitle.setTextSize(20);
+        topMenuHeader.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuLeft.setText(" 设置");
+        topMenuHeader.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuRight.setOnClickListener(this);
+        topMenuHeader.topMenuLeft.setOnClickListener(this);
+        topMenuHeader.ivTopMenuLeft.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.but_alter_psw_save:
+            case top_menu_right:
                 in_origin_psw = et_origin_psw.getText().toString().trim();
                 in_new_psw = et_new_psw.getText().toString().trim();
                 in_new_rpsw = et_new_rpsw.getText().toString().trim();
@@ -95,7 +107,10 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 break;
-            case R.id.but_alter_psw_cancel:
+            case top_menu_left:
+                finish();
+                break;
+            case iv_icon:
                 finish();
                 break;
         }
