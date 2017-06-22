@@ -329,6 +329,8 @@
     <Button
         android:id="@+id/but_YES_label"
         android:text="确定标签"
+        android:textColor="@color/write"
+        android:background="@drawable/but_search_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
