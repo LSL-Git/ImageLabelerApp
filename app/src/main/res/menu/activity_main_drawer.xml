@@ -4,23 +4,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_my_task"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ozk"
             android:title="今日任务" />
         <item
             android:id="@+id/nav_my_integral"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/okg"
             android:title="我的积分" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/history"
             android:title="标签历史" />
         <item
             android:id="@+id/nav_help"
             android:title="帮 助"
-            android:icon="@drawable/ic_menu_manage"/>
+            android:icon="@mipmap/dvf"/>
         <item
             android:id="@+id/nav_search_pic"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ojb"
             android:title="搜 图"/>
     </group>
 

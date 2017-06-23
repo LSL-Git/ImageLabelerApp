@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"ImageLabelerApp "</string>
+    <string name="app_name">"ImageLabel "</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -39,4 +39,5 @@
     <string name="text_ham_button_sub_text_normal">菜单2</string>
     <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
     <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
+    <string name="tv_howlabel_text">图片标签重点在图片中物理特征的描述，\n 不包含情感类的标签,\n 不同标签不该有同级别的同意义的词。\n \n 如下图可以标签为：\n 标签一：动物\n 标签二：犬类\n 标签三：西伯利亚雪橇犬\n 标签四：哈士奇\n 标签五：二哈\n 标签六：撒手没\n 标签七：拆迁办主任</string>
 </resources>

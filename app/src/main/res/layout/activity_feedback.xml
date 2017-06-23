@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/public_header"/>
 
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/et_problem_content"
+        android:padding="20dp"
+        android:hint="请输入遇到的问题或意见.."
+        android:background="@color/write"
+        android:layout_width="match_parent"
+        android:lines="7"
+        android:maxLines="7"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_problem_tel"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:hint="选填，方便我们联系你.."
+        android:background="@color/write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/but_problem_commit"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="提 交"
+        android:textColor="@color/write"
+        android:background="@drawable/but_search_bg"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
