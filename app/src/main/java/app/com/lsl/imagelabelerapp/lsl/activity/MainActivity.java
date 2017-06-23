@@ -286,7 +286,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(MainActivity.this, "帮助/help", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -323,7 +324,8 @@ public class MainActivity extends AppCompatActivity
 //            this.startActivity(intent);
             finish();
         } else if (id == R.id.nav_help) {
-            Toast.makeText(MainActivity.this, "帮助/help", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

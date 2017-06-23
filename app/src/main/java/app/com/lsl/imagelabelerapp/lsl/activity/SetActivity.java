@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
@@ -116,13 +115,16 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.tv_feedback:
-                Toast.makeText(SetActivity.this, "问题反馈", Toast.LENGTH_SHORT).show();
+               intent = new Intent(SetActivity.this, FeedBackActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_about:
-                Toast.makeText(SetActivity.this, "关 于", Toast.LENGTH_SHORT).show();
+                intent = new Intent(SetActivity.this, AboutAppActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_help:
-                Toast.makeText(SetActivity.this, "帮 助", Toast.LENGTH_SHORT).show();
+                intent = new Intent(SetActivity.this, HelpActivity.class);
+                startActivity(intent);
                 break;
         }
     }

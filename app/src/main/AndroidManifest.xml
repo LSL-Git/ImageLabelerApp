@@ -89,6 +89,17 @@
                   android:label="我的积分页"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".lsl.activity.AboutAppActivity"
+                  android:label="关于页"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.HelpActivity"
+            android:label="帮助页"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.FeedBackActivity"
+            android:label="问题反馈页"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
