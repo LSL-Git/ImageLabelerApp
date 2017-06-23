@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.AUTO_LOGIN;
 import static app.com.lsl.imagelabelerapp.lsl.activity.LoginActivity.SPF_USERINFO;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.IS_MANAGER;
+import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.SPF_USERALLINFO;
 
 /** 设置也页
  * Created by M1308_000 on 2017/5/24.
@@ -32,6 +35,9 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     private TextView tv_about;
     private TextView tv_help;
     private TextView tv_feedback;
+    private TextView tv_manager;
+    private SharedPreferences spf;
+    private LinearLayout ll_manager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +56,13 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         tv_feedback = (TextView) findViewById(R.id.tv_feedback);
         tv_help = (TextView) findViewById(R.id.tv_help);
         tv_about = (TextView) findViewById(R.id.tv_about);
+        tv_manager = (TextView) findViewById(R.id.tv_manager);
+        ll_manager = (LinearLayout) findViewById(R.id.ll_manager);
+        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
+
+        if (spf.getBoolean(IS_MANAGER, false)) {
+            ll_manager.setVisibility(View.VISIBLE);
+        }
 
         but_exit_acc.setOnClickListener(this);
         tv_set_alter_psw.setOnClickListener(this);
@@ -57,6 +70,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         tv_feedback.setOnClickListener(this);
         tv_help.setOnClickListener(this);
         tv_about.setOnClickListener(this);
+        tv_manager.setOnClickListener(this);
     }
 
     private void initMenu() {
@@ -75,6 +89,10 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_manager:
+                intent = new Intent(SetActivity.this, ManagerActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_set_alter_psw:
                 intent = new Intent(SetActivity.this, AlterPswActivity.class);
                 this.startActivity(intent);

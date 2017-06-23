@@ -43,6 +43,7 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getTaskPicUrl;
@@ -159,13 +160,15 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onBoomWillShow() {
-                snackbar = Snackbar.make(bmb,"今日完成 1/20", Snackbar.LENGTH_INDEFINITE);
+                snackbar = Snackbar.make(bmb,"今日完成 " + DbUtils.GetTaskState(1), Snackbar.LENGTH_INDEFINITE);
                 snackbar.show();
                 snackbar.setActionTextColor(Color.parseColor("#00FF00"));
                 snackbar.setAction("查看", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "onClicked"  , Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                        intent.putExtra("type","今日完成");
+                        startActivity(intent);
                     }
                 });
             }
@@ -283,7 +286,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Toast.makeText(MainActivity.this, "帮助/help", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -296,15 +299,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_task) {
-            Toast.makeText(MainActivity.this, "今日任务", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_guess_your_like) {
-            Toast.makeText(MainActivity.this, "猜你喜欢", Toast.LENGTH_SHORT).show();
+            ShowImages(getTaskPicUrl());    // 加载今日任务的图片
+        } else if (id == R.id.nav_my_integral) {
+            Intent intent = new Intent(MainActivity.this, MyIntegralActivity.class);
+            intent.putExtra("integral",spf.getString(USER_INTEGRAL,""));
+            startActivity(intent);
         } else if (id == R.id.nav_history) {
-            Toast.makeText(MainActivity.this, "标签历史", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manager) {
-            Intent intent = new Intent(MainActivity.this, ManagerActivity.class);
-            this.startActivity(intent);
-
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            intent.putExtra("type","标签历史");
+            startActivity(intent);
         } else if (id == R.id.nav_setting) {
             intent = new Intent(MainActivity.this, SetActivity.class);
             this.startActivity(intent);
@@ -319,6 +322,8 @@ public class MainActivity extends AppCompatActivity
 //            intent = new Intent(MainActivity.this, LoginActivity.class);
 //            this.startActivity(intent);
             finish();
+        } else if (id == R.id.nav_help) {
+            Toast.makeText(MainActivity.this, "帮助/help", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -330,6 +335,9 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_user_icon:
+                SharedPreferences.Editor editor = spf.edit();
+                editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(1));
+                editor.commit();
                 Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                 startActivity(intent);
                 break;
@@ -356,12 +364,13 @@ public class MainActivity extends AppCompatActivity
         if (is_manager) {
             tv_user_status.setText("MANAGER");
         } else {
-            tv_user_status.setText("USER");
+            tv_user_status.setText("VOLUNTEER");
         }
 
         tv_user_name.setText(spf.getString(USER_NAME,""));
         tv_user_integral.setText("积分 " + spf.getString(USER_INTEGRAL,""));
-        tv_user_task_status.setText("今日进度 " + spf.getString(USER_TASK_COMPLETION,""));
+//        tv_user_task_status.setText("今日进度 " + DbUtils.GetTaskState(1));
+        tv_user_task_status.setVisibility(View.GONE);
         Bitmap bitmap = BitmapFactory.decodeFile(spf.getString(USER_ICON,""));
         iv_user_icon.setImageBitmap(bitmap);
     }
@@ -382,7 +391,7 @@ public class MainActivity extends AppCompatActivity
             editor.putString(USER_ICON, USER_ICON_PATH + json.getString(USER_ICON));
 //            editor.putString(USER_ICON_CODE, json.getString(USER_ICON_CODE));
             editor.putString(USER_INTEGRAL, json.getString(USER_INTEGRAL));
-            editor.putString(USER_TASK_COMPLETION, json.getString(USER_TASK_COMPLETION));
+            editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(1));
             if (json.getString(IS_MANAGER).equals("1")) {
                 editor.putBoolean(IS_MANAGER,true);
             } else {

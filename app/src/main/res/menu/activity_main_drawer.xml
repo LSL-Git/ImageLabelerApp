@@ -7,33 +7,33 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="今日任务" />
         <item
-            android:id="@+id/nav_guess_your_like"
+            android:id="@+id/nav_my_integral"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="猜你喜欢" />
+            android:title="我的积分" />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="标签历史" />
         <item
-            android:id="@+id/nav_manager"
-            android:icon="@drawable/ic_menu_share"
-            android:title="我是管理员" />
+            android:id="@+id/nav_help"
+            android:title="帮 助"
+            android:icon="@drawable/ic_menu_manage"/>
         <item
             android:id="@+id/nav_search_pic"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="搜图"/>
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="搜 图"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Other Tools">
         <menu>
             <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="设置" />
+                android:title="设 置" />
             <item
                 android:id="@+id/nav_exit_acc"
                 android:icon="@drawable/ic_menu_send"
-                android:title="退出" />
+                android:title="退 出" />
         </menu>
     </item>
 

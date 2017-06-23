@@ -88,7 +88,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
     private String la_10;
     private String picName;
 
-    private static final String COMM = "COMMIT";
+    public static final String COMM = "COMMIT";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

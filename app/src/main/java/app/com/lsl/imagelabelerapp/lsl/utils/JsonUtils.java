@@ -14,7 +14,7 @@ public class JsonUtils {
     private static final String COUNT = "Count";
     private static final String DATA = "data";
     private static int count;
-
+    public static final String NOP = "NOP";
 
     /**
      * 解析任务图片信息
@@ -32,7 +32,7 @@ public class JsonUtils {
 //            Log.e(TAG, "name:" + picName);
 //            Log.e(TAG, "url:" + picUrl);
 //            Log.e(TAG,"batch:" + batch);
-            DbUtils.SaveTaskPicInfo(picName, picUrl, batch, "NOP",DateUtils.getNowTime());
+            DbUtils.SaveTaskPicInfo(picName, picUrl, batch, NOP,DateUtils.getNowTime());
         }
 
     }

@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".lsl.activity.MainActivity"
-            android:label="今日任务"
+            android:label="图片"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
@@ -79,6 +79,14 @@
 
         <activity android:name=".lsl.activity.mUserInfoActivity"
                   android:label="管理员查询显示用户的信息"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.HistoryActivity"
+                  android:label="查看历史页"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.MyIntegralActivity"
+                  android:label="我的积分页"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

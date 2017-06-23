@@ -21,6 +21,9 @@ import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.TaskPicUrlTb;
 import app.com.lsl.imagelabelerapp.lsl.model.UserList;
 
+import static app.com.lsl.imagelabelerapp.lsl.activity.ImageLabelActivity.COMM;
+import static app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils.NOP;
+
 /** 数据库操作类
  * Created by M1308_000 on 2017/5/19.
  */
@@ -29,6 +32,29 @@ public class DbUtils {
 
     private static final String TAG = "DbUtils";
     private static String picPath ;
+    private static int nop;
+    private static int commit;
+
+    public static String GetTaskState(int batch) {
+        Cursor cursor = DataSupport.findBySQL("select COUNT(State) as nop from TaskPicUrlTb " +
+                "where State = '" + NOP + "' and batch = " + batch);
+        if (0 < cursor.getCount()) {
+            while(cursor.moveToNext()) {
+                nop = cursor.getInt(cursor.getColumnIndex("nop"));
+            }
+        }
+
+        Cursor cursor2 = DataSupport.findBySQL("select COUNT(State) as comm from TaskPicUrlTb " +
+                "where State = '" + COMM + "' and batch = " + batch);
+        if (0 < cursor2.getCount()) {
+            while(cursor2.moveToNext()) {
+                commit = cursor2.getInt(cursor2.getColumnIndex("comm"));
+            }
+        }
+//        Log.e(TAG, "nop" + nop);
+//        Log.e(TAG, "commit" + commit);
+        return commit + "/" + (commit + nop);
+    }
 
     /**
      * 更新图片任务状态
