@@ -58,7 +58,7 @@
         android:layout_marginRight="11dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/yes"
+        android:src="@mipmap/fgt"
         android:background="@color/write"
         android:textColor="@color/colorPrimaryDark" />
 

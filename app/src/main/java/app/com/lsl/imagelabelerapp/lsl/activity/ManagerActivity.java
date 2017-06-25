@@ -32,6 +32,8 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
     private Button but_upload_img;
     private Button but_check_users_info;
     private Intent intent;
+    private Button but_label_set;
+    private Button but_user_feedback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,10 +75,15 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
         but_check_users_info = (Button) findViewById(R.id.but_check_users_info);
         but_export_label_result = (Button) findViewById(R.id.but_export_label_result);
         but_upload_img = (Button) findViewById(R.id.but_upload_img);
+        but_label_set = (Button) findViewById(R.id.but_label_set);
+        but_user_feedback = (Button) findViewById(R.id.but_search_user_feedback);
 
+
+        but_user_feedback.setOnClickListener(this);
         but_check_users_info.setOnClickListener(this);
         but_export_label_result.setOnClickListener(this);
         but_upload_img.setOnClickListener(this);
+        but_label_set.setOnClickListener(this);
     }
 
 
@@ -97,6 +104,14 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
                 // 参数三：图片选择路径，null表示所有路径
                 // 图片上传的服务器地址
                 PhotoPickerActivity.actionStart(ManagerActivity.this, 10, null, url);
+                break;
+            case R.id.but_label_set:
+                intent = new Intent(ManagerActivity.this, LabelSetActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.but_search_user_feedback:
+                intent = new Intent(ManagerActivity.this, FeedbackSearchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.iv_icon:
                 finish();

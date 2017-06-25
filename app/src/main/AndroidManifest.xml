@@ -100,6 +100,14 @@
         <activity android:name=".lsl.activity.FeedBackActivity"
                   android:label="问题反馈页"
                   android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.LabelSetActivity"
+                  android:label="图片标签设置页"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".lsl.activity.FeedbackSearchActivity"
+                  android:label="查看问题反馈信息"
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

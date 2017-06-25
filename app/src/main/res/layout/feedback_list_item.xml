@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_fb_state"
+            tools:text="状态"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_fb_user"
+            tools:text="提交人"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_fb_commit_time"
+            tools:text="提交时间"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_fb_content"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        tools:text="主要内家家偶尔的爱计算机公安局爱上的结果"
+        android:maxEms="10"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="16dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

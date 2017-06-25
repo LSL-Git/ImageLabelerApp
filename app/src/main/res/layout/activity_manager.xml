@@ -1,26 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/public_header"/>
 
     <Button
+        android:textColor="@color/write"
+        android:background="@drawable/but_search_bg"
+        android:layout_marginTop="10dp"
         android:id="@+id/but_check_users_info"
         android:text="查看用户信息"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        android:textColor="@color/write"
+        android:background="@drawable/but_bg2"
+        android:layout_marginTop="10dp"
         android:id="@+id/but_export_label_result"
         android:text="导出标签化结果"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        android:textColor="@color/write"
+        android:background="@drawable/but_search_bg"
+        android:layout_marginTop="10dp"
         android:id="@+id/but_upload_img"
         android:text="上传图片资料"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/but_label_set"
+        android:textColor="@color/write"
+        android:background="@drawable/but_bg2"
+        android:layout_marginTop="10dp"
+        android:text="标签设置"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/but_search_user_feedback"
+        android:textColor="@color/write"
+        android:background="@drawable/but_search_bg"
+        android:layout_marginTop="10dp"
+        android:text="查看用户反馈"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
