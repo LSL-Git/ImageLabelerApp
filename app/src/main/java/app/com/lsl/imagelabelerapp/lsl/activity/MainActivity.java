@@ -46,6 +46,7 @@ import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.App.User.getUser;
 import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getMyTask;
 import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getTaskPicUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onBoomWillShow() {
-                snackbar = Snackbar.make(bmb,"今日完成 " + DbUtils.GetTaskState(1), Snackbar.LENGTH_INDEFINITE);
+                snackbar = Snackbar.make(bmb,"今日完成 " + DbUtils.GetTaskState(getUser()), Snackbar.LENGTH_INDEFINITE);
                 snackbar.show();
                 snackbar.setActionTextColor(Color.parseColor("#00FF00"));
                 snackbar.setAction("查看", new View.OnClickListener() {
@@ -340,7 +341,7 @@ public class MainActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.iv_user_icon:
                 SharedPreferences.Editor editor = spf.edit();
-                editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(1));
+                editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(getUser()));
                 editor.commit();
                 Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                 startActivity(intent);
@@ -395,7 +396,7 @@ public class MainActivity extends AppCompatActivity
             editor.putString(USER_ICON, USER_ICON_PATH + json.getString(USER_ICON));
 //            editor.putString(USER_ICON_CODE, json.getString(USER_ICON_CODE));
             editor.putString(USER_INTEGRAL, json.getString(USER_INTEGRAL));
-            editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(1));
+            editor.putString(USER_TASK_COMPLETION, DbUtils.GetTaskState(getUser()));
             if (json.getString(IS_MANAGER).equals("1")) {
                 editor.putBoolean(IS_MANAGER,true);
             } else {

@@ -35,9 +35,9 @@ public class DbUtils {
     private static int nop;
     private static int commit;
 
-    public static String GetTaskState(int batch) {
+    public static String GetTaskState(String userName) {
         Cursor cursor = DataSupport.findBySQL("select COUNT(State) as nop from TaskPicUrlTb " +
-                "where State = '" + NOP + "' and batch = " + batch);
+                "where State = '" + NOP + "' and user = '" + userName + "'");
         if (0 < cursor.getCount()) {
             while(cursor.moveToNext()) {
                 nop = cursor.getInt(cursor.getColumnIndex("nop"));
@@ -45,7 +45,7 @@ public class DbUtils {
         }
 
         Cursor cursor2 = DataSupport.findBySQL("select COUNT(State) as comm from TaskPicUrlTb " +
-                "where State = '" + COMM + "' and batch = " + batch);
+                "where State = '" + COMM + "' and user = '" + userName + "'");
         if (0 < cursor2.getCount()) {
             while(cursor2.moveToNext()) {
                 commit = cursor2.getInt(cursor2.getColumnIndex("comm"));
