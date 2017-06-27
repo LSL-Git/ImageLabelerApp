@@ -3,6 +3,8 @@ package app.com.lsl.imagelabelerapp.lsl.utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import app.com.lsl.imagelabelerapp.lsl.App.User;
+
 /** 解析json数据类
  * Created by M1308_000 on 2017/5/12.
  */
@@ -32,7 +34,7 @@ public class JsonUtils {
 //            Log.e(TAG, "name:" + picName);
 //            Log.e(TAG, "url:" + picUrl);
 //            Log.e(TAG,"batch:" + batch);
-            DbUtils.SaveTaskPicInfo(picName, picUrl, batch, NOP,DateUtils.getNowTime());
+            DbUtils.SaveTaskPicInfo(picName, picUrl, batch, NOP,DateUtils.getNowTime(), User.getUser());
         }
 
     }

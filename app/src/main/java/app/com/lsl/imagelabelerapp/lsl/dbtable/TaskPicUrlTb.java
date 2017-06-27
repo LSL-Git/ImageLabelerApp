@@ -27,6 +27,30 @@ public class TaskPicUrlTb extends DataSupport {
      * 领取任务时间
      */
     private String getTaskTime;
+    /**
+     * 领取用户名
+     */
+    private String user;
+    /**
+     * 提交结果时间
+     */
+    private String commitTime;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getCommitTime() {
+        return commitTime;
+    }
+
+    public void setCommitTime(String commitTime) {
+        this.commitTime = commitTime;
+    }
 
     public String getPicName() {
         return picName;

@@ -1,2 +1,2 @@
 ﻿# ImageLabelerApp
-图片标识
+图片标识app

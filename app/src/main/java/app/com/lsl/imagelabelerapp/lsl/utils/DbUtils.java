@@ -65,6 +65,7 @@ public class DbUtils {
     public static boolean UpdateTaskPicState(String picName, String State) {
         TaskPicUrlTb picUrlTb = new TaskPicUrlTb();
         picUrlTb.setState(State);
+        picUrlTb.setCommitTime(DateUtils.getNowTime());
         int r = picUrlTb.updateAll("picName = ?", picName);
         return r > 0;
     }
@@ -74,14 +75,23 @@ public class DbUtils {
      * @param State
      * @return
      */
-    public static ArrayList<String> GetTaskPicUrl(String State) {
+    public static ArrayList<String> GetTaskPicUrl(String State, String userName) {
         ArrayList<String> list = new ArrayList<>();
-        List<TaskPicUrlTb> urlTbList = DataSupport.select("picUrl").where("State = ?", State).find(TaskPicUrlTb.class);
-        if (urlTbList.size() > 0) {
-            for (TaskPicUrlTb url : urlTbList) {
-                list.add(url.getPicUrl());
+        Cursor cursor = DataSupport.findBySQL("select picUrl from TaskPicUrlTb where State = '" + State
+                + "' and user = '" + userName + "'");
+
+        if (cursor.getCount() > 0) {
+            while(cursor.moveToNext()) {
+//                Log.e(TAG, cursor.getString(cursor.getColumnIndex("picurl")));
+                list.add(cursor.getString(cursor.getColumnIndex("picurl")));
             }
         }
+//        List<TaskPicUrlTb> urlTbList = DataSupport.select("picUrl").where("State = ?", State).find(TaskPicUrlTb.class);
+//        if (urlTbList.size() > 0) {
+//            for (TaskPicUrlTb url : urlTbList) {
+//                list.add(url.getPicUrl());
+//            }
+//        }
         return list;
     }
 
@@ -93,15 +103,17 @@ public class DbUtils {
      * @param state
      * @param nowTime
      */
-    public static void SaveTaskPicInfo(String picName, String picUrl, int batch, String state, String nowTime) {
+    public static void SaveTaskPicInfo(String picName, String picUrl, int batch
+            , String state, String nowTime, String userName) {
         TaskPicUrlTb picUrlTb = new TaskPicUrlTb();
-        Cursor cursor = DataSupport.findBySQL("select picName,batch from TaskPicUrlTb where picName = '" + picName + "'" +
-                " and batch = " + batch);
+        Cursor cursor = DataSupport.findBySQL("select picName,batch from TaskPicUrlTb " +
+                "where picName = '" + picName + "'" + " and user = '" + userName + "'");
         if (cursor.getCount() == 0) {
             picUrlTb.setPicName(picName);
             picUrlTb.setPicUrl(picUrl);
             picUrlTb.setBatch(batch);
             picUrlTb.setState(state);
+            picUrlTb.setUser(userName);
             picUrlTb.setGetTaskTime(nowTime);
             if (picUrlTb.save())
                 Log.e(TAG, "task pic url save success!");

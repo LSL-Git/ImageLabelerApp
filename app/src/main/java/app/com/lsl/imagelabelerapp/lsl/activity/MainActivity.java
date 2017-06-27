@@ -46,6 +46,7 @@ import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getMyTask;
 import static app.com.lsl.imagelabelerapp.lsl.task.GetTask.getTaskPicUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetImgUrl;
 import static app.com.lsl.imagelabelerapp.lsl.utils.FileUtils.CreateDirInSDCard;
@@ -235,6 +236,7 @@ public class MainActivity extends AppCompatActivity
         map1.put("type","GetFileInfo");
         new Thread(new HttpUtils(map1,GETPICINFO)).start();
 
+        getMyTask();
     }
 
     /**
