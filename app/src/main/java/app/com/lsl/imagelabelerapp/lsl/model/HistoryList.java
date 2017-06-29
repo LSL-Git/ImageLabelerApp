@@ -6,7 +6,7 @@ package app.com.lsl.imagelabelerapp.lsl.model;
 
 public class HistoryList {
 
-    private int iconId;
+    private String iconId;
 
     private String picLabels;
 
@@ -14,18 +14,18 @@ public class HistoryList {
 
     private String labelState;
 
-    public HistoryList(int iconId, String picLabels, String labelTime, String labelState) {
+    public HistoryList(String iconId, String picLabels, String labelTime, String labelState) {
         this.iconId = iconId;
         this.picLabels = picLabels;
         this.labelTime = labelTime;
         this.labelState = labelState;
     }
 
-    public int getIconId() {
+    public String getIconId() {
         return iconId;
     }
 
-    public void setIconId(int iconId) {
+    public void setIconId(String iconId) {
         this.iconId = iconId;
     }
 

@@ -29,6 +29,7 @@ import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.activity.MainActivity.SPF_USERALLINFO;
@@ -176,11 +177,12 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void ShowLoading() {
-        Toast.makeText(this,"save...",Toast.LENGTH_SHORT).show();
+        DialogUtil.showLoadingDialog(UserInfoActivity.this, "保存中...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+        DialogUtil.closeLoadingDialog();
         try {
             if (JsonUtils.LoginAndRegisterJson(obj.toString()).equals("Update_Success")) {
                 SharedPreferences.Editor editor = spf.edit();

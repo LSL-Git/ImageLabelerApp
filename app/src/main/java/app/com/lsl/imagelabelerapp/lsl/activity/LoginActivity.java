@@ -30,6 +30,7 @@ import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.LoginTask;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 
@@ -106,8 +107,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }).start();
 
-
-
         but_login = (Button) findViewById(R.id.but_login);
         tv_register = (TextView) findViewById(R.id.tv_register);
         tv_forget = (TextView) findViewById(R.id.tv_forget_psw);
@@ -147,10 +146,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.but_login:
                 user_name = et_user_name.getText().toString().trim();
                 user_psw = et_user_psw.getText().toString().trim();
-
+                tv_show_login_msg.setText("");
                 if (user_name.isEmpty() || user_psw.isEmpty()) {
                     Toast.makeText(this,"用户名或密码不能为空！",Toast.LENGTH_SHORT).show();
                 } else {
+                    DialogUtil.showLoadingDialog(LoginActivity.this, "登录中...", true);
                     // 启动登录业务
                     new UserPresenter(this,LoginTask.Login(user_name,user_psw), LoginTask.getTYPE()).fetch();
 
@@ -230,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.commit();
             }
 
-            User.setUser(user_name);
+            User.setUser(user_name);// 设置全局用户名
 
             // 登录成功，跳转到主页面
             Intent intent = new Intent(this, MainActivity.class);
@@ -239,10 +239,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
 
         } else if (RESULT.equals("Psw_Err")){// 密码错误
+            DialogUtil.closeLoadingDialog();
             tv_show_login_msg.setText("密码错误");
         } else if (RESULT.equals("User_Not_Exist")) {// 用户不存在
+            DialogUtil.closeLoadingDialog();
             tv_show_login_msg.setText("用户名不存在.");
         } else if (RESULT.equals("Login_Fail")){    // 登录失败
+            DialogUtil.closeLoadingDialog();
             tv_show_login_msg.setText("登录失败");
         }
     }

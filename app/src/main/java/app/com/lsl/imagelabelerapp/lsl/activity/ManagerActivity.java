@@ -91,7 +91,6 @@ public class ManagerActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.but_check_users_info:
-                makeText(this,"查看用户信息",Toast.LENGTH_SHORT).show();
                 intent = new Intent(ManagerActivity.this, UserNameListActivity.class);
                 this.startActivity(intent);
                 break;

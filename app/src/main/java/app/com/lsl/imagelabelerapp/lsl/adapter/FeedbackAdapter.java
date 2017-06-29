@@ -73,7 +73,7 @@ public class FeedbackAdapter extends BaseAdapter {
 
         viewHolder.tv_state.setText(feedbackList.getState());
         if (feedbackList.getState().equals("已处理")) {
-            viewHolder.tv_state.setTextColor(Color.parseColor("#00FF00"));
+            viewHolder.tv_state.setTextColor(Color.parseColor("#13BD34"));
         } else {
             viewHolder.tv_state.setTextColor(Color.parseColor("#FF0000"));
         }

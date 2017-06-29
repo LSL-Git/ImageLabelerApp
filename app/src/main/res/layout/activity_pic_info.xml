@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/public_header"/>
+
     <ImageView
         android:id="@+id/iv_pic"
         android:background="#000"

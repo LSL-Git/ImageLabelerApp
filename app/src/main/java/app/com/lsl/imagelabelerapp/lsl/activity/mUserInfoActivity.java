@@ -26,6 +26,7 @@ import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 
 /**
  * Created by M1308_000 on 2017/6/11.
@@ -107,11 +108,12 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
 
     @Override
     public void ShowLoading() {
-        Toast.makeText(this,"loading...", Toast.LENGTH_SHORT).show();
+        DialogUtil.showLoadingDialog(mUserInfoActivity.this, "loading...",true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+        DialogUtil.closeLoadingDialog();
         Log.e(TAG, obj.toString());
         try {
             JSONObject rjson = new JSONObject(obj.toString());
@@ -164,7 +166,6 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
                 map.put("manager",manager);
                 map.put("type","update");
                 new UserPresenter(mUserInfoActivity.this, map, "userinfo").fetch();
-
                 break;
             case R.id.top_menu_left:
                 finish();

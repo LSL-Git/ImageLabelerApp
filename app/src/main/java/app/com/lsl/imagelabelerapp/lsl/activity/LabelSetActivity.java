@@ -22,6 +22,7 @@ import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 
 /**
  * Created by M1308_000 on 2017/6/25.
@@ -39,11 +40,12 @@ public class LabelSetActivity extends AppCompatActivity implements UserView ,Vie
 
     @Override
     public void ShowLoading() {
-        Toast.makeText(LabelSetActivity.this, "loading...", Toast.LENGTH_SHORT).show();
+        DialogUtil.showLoadingDialog(LabelSetActivity.this, "loading...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+        DialogUtil.closeLoadingDialog();
         try {
             JSONObject json = new JSONObject(obj.toString());
             String data = json.getString("result");

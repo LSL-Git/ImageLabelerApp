@@ -19,6 +19,7 @@ import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 
 import static app.com.lsl.imagelabelerapp.R.id.iv_icon;
 import static app.com.lsl.imagelabelerapp.R.id.top_menu_left;
@@ -134,17 +135,16 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void ShowLoading() {
-
+        DialogUtil.showLoadingDialog(AlterPswActivity.this, "保存中...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
-        Log.e("AlterPswActivity",obj.toString());
+        DialogUtil.closeLoadingDialog();
         if (obj.toString().equals("12")) {
             Toast.makeText(AlterPswActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor = spf.edit();
             editor.putString(PASSWORD, in_new_psw);
-            Log.e("AlterPswActivity","new psw ：" + in_new_psw);
             editor.commit();
             finish();
         } else if (obj.toString().equals("0")) {

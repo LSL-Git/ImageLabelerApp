@@ -102,8 +102,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.BaseViewHold
                 img_url = (String) data;
                //Log.e("ImageAdapter","setData text " + img_url + " pos " + pos);
                 Glide.with(itemView.getContext()).load(img_url).diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.mipmap.ic_launcher).crossFade().into(ivImage);
-                Bitmap bitmap = BitmapFactory.decodeResource(res,R.mipmap.ic_launcher);
+                        .placeholder(R.mipmap.appicon).crossFade().into(ivImage);
+                Bitmap bitmap = BitmapFactory.decodeResource(res,R.mipmap.icon);
                 //异步获得bitmap图片颜色值
                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                     @Override

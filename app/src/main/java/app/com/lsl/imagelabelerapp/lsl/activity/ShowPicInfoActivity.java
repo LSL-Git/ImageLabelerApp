@@ -2,10 +2,12 @@ package app.com.lsl.imagelabelerapp.lsl.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
 import okhttp3.Call;
@@ -21,7 +24,7 @@ import okhttp3.Call;
  * Created by M1308_000 on 2017/6/10.
  */
 
-public class ShowPicInfoActivity extends AppCompatActivity {
+public class ShowPicInfoActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = "ShowPicInfoActivity";
 
@@ -42,7 +45,21 @@ public class ShowPicInfoActivity extends AppCompatActivity {
 
         initViews();
         getData();
+        initMenu();
     }
+
+    private void initMenu() {
+        TopMenuHeader topMenuHeader = new TopMenuHeader(getWindow().getDecorView());
+        topMenuHeader.topMenuTitle.setText("图片信息");
+        topMenuHeader.topMenuTitle.setTextSize(20);
+        topMenuHeader.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuLeft.setText("返回");
+        topMenuHeader.topMenuLeft.setTextColor(Color.parseColor("#33CCB6"));
+        topMenuHeader.topMenuRight.setVisibility(View.GONE);
+        topMenuHeader.topMenuLeft.setOnClickListener(this);
+        topMenuHeader.ivTopMenuLeft.setOnClickListener(this);
+    }
+
 
     private void getData() {
         intent = getIntent();
@@ -76,5 +93,10 @@ public class ShowPicInfoActivity extends AppCompatActivity {
         tv_pic_name = (TextView) findViewById(R.id.tv_pic_name);
         tv_pic_label_time = (TextView) findViewById(R.id.tv_pic_label_success_time);
         tv_pic_labels = (TextView) findViewById(R.id.tv_pic_labels);
+    }
+
+    @Override
+    public void onClick(View v) {
+        finish();
     }
 }

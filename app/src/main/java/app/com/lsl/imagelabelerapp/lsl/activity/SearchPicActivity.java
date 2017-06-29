@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,7 +146,6 @@ public class SearchPicActivity extends AppCompatActivity implements SearchView.S
                 intent.putExtra("picNum", Integer.parseInt(picNum));
                 startActivity(intent);
 
-                Toast.makeText(SearchPicActivity.this, position + "" + fileName, Toast.LENGTH_SHORT).show();
             }
         });
 

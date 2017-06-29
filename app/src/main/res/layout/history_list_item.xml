@@ -23,6 +23,9 @@
         <TextView
             android:id="@+id/tv_history_labels"
             tools:text="图片标签"
+            android:maxEms="16"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"/>

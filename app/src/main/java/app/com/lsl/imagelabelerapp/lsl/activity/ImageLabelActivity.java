@@ -29,8 +29,11 @@ import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
+import app.com.lsl.imagelabelerapp.lsl.utils.DateUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.StrUtils;
 import okhttp3.Call;
 
 
@@ -89,6 +92,9 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
     private String picName;
 
     public static final String COMM = "COMMIT";
+    private static final String INPRO = "处理中";
+    private Map<String, String> map;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,7 +222,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
     private void UpLoadData(String label1, String label2, String label3, String label4, String label5,
                             String label6, String label7, String label8, String label9, String label10) {
         String TYPE = "PicLabelServlet";
-        Map<String, String> map = new HashMap<>();
+        map = new HashMap<>();
         map.put("userName", User.getUser());
         map.put("picName", picName);
         map.put("type","putlabels");
@@ -338,6 +344,9 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    /**
+     * 文本框监听
+     */
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -464,20 +473,18 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void ShowLoading() {
-        Toast.makeText(this, "upload...", Toast.LENGTH_SHORT).show();
+        DialogUtil.showLoadingDialog(ImageLabelActivity.this, "提交中...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+        DialogUtil.closeLoadingDialog();
         try {
             String result = JsonUtils.LoginAndRegisterJson(obj.toString());
             if (result.equals("OK")) {
-                if (DbUtils.UpdateTaskPicState(picName, COMM)) {
-                    Toast.makeText(ImageLabelActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(ImageLabelActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(ImageLabelActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                SaveData();
+                finish();
             } else {
                 Toast.makeText(ImageLabelActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
             }
@@ -485,5 +492,16 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 提交标签后 本地保存相关信息
+     */
+    private void SaveData() {
+        DbUtils.UpdateTaskPicState(picName, COMM);  // 更新任务表信息
+
+        DbUtils.SaveLabelsInfo(StrUtils.GetLabelsStr(map), DateUtils.getNowTime()
+                , INPRO, picName, img_url, User.getUser());
+
     }
 }

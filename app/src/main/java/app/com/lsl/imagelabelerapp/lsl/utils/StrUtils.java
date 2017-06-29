@@ -17,6 +17,24 @@ import java.util.Map;
 public class StrUtils {
 
     public static final String TAG = "StrUtils";
+    private static String result;
+
+    /**
+     * 格式化标签
+     * @param map
+     * @return
+     */
+    public static String GetLabelsStr(Map<String,String> map) {
+        if (map.size() > 0) {
+            result = map.get("label1");
+            for (int i = 2; i <= 10; i++) {
+                if (!map.get("label" + i).equals(""))
+                    result += "/" + map.get("label" + i);
+            }
+        }
+
+        return result;
+    }
 
     /**
      * 将所有标签拼接

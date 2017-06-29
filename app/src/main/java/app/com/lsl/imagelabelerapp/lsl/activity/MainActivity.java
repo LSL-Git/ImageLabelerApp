@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 //                        View view = boomButton.getSubTextView();
 //                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                                .setAction("Action", null).show();
-                        ShowImages(GetImgUrl());      // 加载猜其他图片
+                        ShowImages(getData());      // 加载猜其他图片
                         break;
                 }
             }

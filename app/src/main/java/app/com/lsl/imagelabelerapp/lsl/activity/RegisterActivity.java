@@ -17,6 +17,7 @@ import app.com.lsl.imagelabelerapp.lsl.activity.menu.TopMenuHeader;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.task.RegisterTask;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 import app.com.lsl.imagelabelerapp.lsl.utils.JsonUtils;
 
 /** 用户注册页面
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String new_user_psw = et_new_user_psw.getText().toString().trim();
                 final String user_rpsw = et_new_user_rpsw.getText().toString().trim();
                 final String user_tel = et_user_tel.getText().toString().trim();
-
+                tv_show_msg.setText("");
                 if (user_rpsw.isEmpty() || user_tel.isEmpty() || new_user_name.isEmpty() || new_user_psw.isEmpty()) {
                     tv_show_msg.setText("请将信息填写完整！");
                 } else if (!new_user_psw.equals(user_rpsw)) {
@@ -103,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void ShowLoading() {
-        tv_show_msg.setText("注册中...");
+        DialogUtil.showLoadingDialog(RegisterActivity.this, "注册中...", true);
     }
 
     @Override
@@ -117,12 +118,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (result.equals("User_Name_Exist")) {  // 用户名已存在
+            DialogUtil.closeLoadingDialog();
             tv_show_msg.setText("用户名已存在");
         } else if (result.equals("Register_Success")) { // 注册成功
             // 注册成功。跳转到登录页面
             finish();
             Toast.makeText(RegisterActivity.this,"注册成功", Toast.LENGTH_SHORT).show();
         } else {    // 注册失败
+            DialogUtil.closeLoadingDialog();
             tv_show_msg.setText("注册失败");
         }
     }

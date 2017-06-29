@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class UserListAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
 
-            Toast.makeText(context, "click image" + userName.getText().toString(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "click image" + userName.getText().toString(),Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.Map;
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.AllUserNameTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.LabelsTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicTypeAndNumTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.SearchHistoryTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.TaskPicUrlTb;
+import app.com.lsl.imagelabelerapp.lsl.model.HistoryList;
 import app.com.lsl.imagelabelerapp.lsl.model.UserList;
 
 import static app.com.lsl.imagelabelerapp.lsl.activity.ImageLabelActivity.COMM;
@@ -35,6 +38,78 @@ public class DbUtils {
     private static int nop;
     private static int commit;
 
+    /**
+     * 获取今日标签的图片信息
+     * @param userName
+     * @return
+     */
+    public static List<HistoryList> GetTodayLabelsInfo(String userName) {
+        List<LabelsTb> labelsTbs = DataSupport.select("labels, commitTime, labelState, picUrl")
+                .where("User = ?", userName).find(LabelsTb.class);
+        List<HistoryList> lists = new ArrayList<>();
+        if (labelsTbs.size() != 0) {
+            for (LabelsTb info : labelsTbs) {
+                try {
+                    if (DateUtils.IsToday(info.getCommitTime()))
+                        lists.add(new HistoryList(info.getPicUrl(), info.getLabels(),
+                                info.getCommitTime(), info.getLabelState()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lists;
+    }
+
+    /**
+     * 获取所有标签信息
+     * @param userName
+     */
+    public static List<HistoryList> GetLabelsInfo(String userName) {
+        List<LabelsTb> labelsTbs = DataSupport.select("labels, commitTime, labelState, picUrl")
+                .where("User = ?", userName).find(LabelsTb.class);
+        List<HistoryList> lists = new ArrayList<>();
+        if (labelsTbs.size() != 0) {
+            for (LabelsTb info : labelsTbs) {
+                lists.add(new HistoryList(info.getPicUrl(), info.getLabels(),
+                        info.getCommitTime(), info.getLabelState()));
+            }
+        }
+        return lists;
+    }
+
+    /**
+     * 保存图片标签信息
+     * @param labels
+     * @param cTime
+     * @param State
+     * @param picName
+     * @param picUrl
+     * @param User
+     */
+    public static void SaveLabelsInfo(String labels, String cTime, String State, String picName,
+                                      String picUrl, String User) {
+        LabelsTb labelsTb = new LabelsTb();
+        Cursor cursor = DataSupport.findBySQL("select * from LabelsTb" + " where picName = '" +
+                picName + "' and User = '" + User + "'");
+        if (cursor.getCount() == 0) {
+            labelsTb.setLabels(labels);
+            labelsTb.setCommitTime(cTime);
+            labelsTb.setPicName(picName);
+            labelsTb.setLabelState(State);
+            labelsTb.setPicUrl(picUrl);
+            labelsTb.setUser(User);
+            if (labelsTb.save()) {
+                Log.e(TAG, "labels info save success");
+            }
+        }
+    }
+
+    /**
+     * 获取今日任务完成量与总任务量的比
+     * @param userName
+     * @return
+     */
     public static String GetTaskState(String userName) {
         Cursor cursor = DataSupport.findBySQL("select COUNT(State) as nop from TaskPicUrlTb " +
                 "where State = '" + NOP + "' and user = '" + userName + "'");
