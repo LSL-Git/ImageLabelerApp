@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,6 +95,9 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
     public static final String COMM = "COMMIT";
     private static final String INPRO = "处理中";
     private Map<String, String> map;
+    private String type;
+    private String labels;
+    private String[] las;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,7 +121,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
 
     private void initMenu() {
         TopMenuHeader topMenu = new TopMenuHeader(getWindow().getDecorView());
-        topMenu.topMenuTitle.setText("图片标签");
+        topMenu.topMenuTitle.setText(type);
         topMenu.topMenuTitle.setTextSize(20);
         topMenu.topMenuTitle.setTextColor(Color.parseColor("#33CCB6"));
         topMenu.topMenuLeft.setText("返回");
@@ -182,7 +186,55 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
         img_url = intent.getStringExtra("img_url");
         String [] s = img_url.split("/");
         picName = s[s.length - 1];
+        type = intent.getStringExtra("type");
 
+        if (type.equals("修改标签")) {
+            labels = intent.getStringExtra("labels");
+            but_yes_label.setText("保存修改");
+
+            las = labels.substring(3, labels.length()).split("/");
+
+            showOriginLabels(las, las.length);
+
+        }
+
+    }
+
+    /**
+     * 显示原来标签
+     * @param labs
+     */
+    private void showOriginLabels(String [] labs, int len) {
+        if (len-- > 0) {
+            et_label_1.setText(labs[0]);
+        }
+        if (len-- > 0) {
+            et_label_2.setText(labs[1]);
+        }
+        if (len-- > 0) {
+            et_label_3.setText(labs[2]);
+        }
+        if (len-- > 0) {
+            et_label_4.setText(labs[3]);
+        }
+        if (len-- > 0) {
+            et_label_5.setText(labs[4]);
+        }
+        if (len-- > 0) {
+            et_label_6.setText(labs[5]);
+        }
+        if (len-- > 0) {
+            et_label_7.setText(labs[6]);
+        }
+        if (len-- > 0) {
+            et_label_8.setText(labs[7]);
+        }
+        if (len-- > 0) {
+            et_label_9.setText(labs[8]);
+        }
+        if (len-- > 0) {
+            et_label_10.setText(labs[9]);
+        }
     }
 
     /**
@@ -483,6 +535,11 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
             String result = JsonUtils.LoginAndRegisterJson(obj.toString());
             if (result.equals("OK")) {
                 Toast.makeText(ImageLabelActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                intent.putExtra("back", "OK");
+                setResult(2, intent);
+
                 SaveData();
                 finish();
             } else {
@@ -498,10 +555,16 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
      * 提交标签后 本地保存相关信息
      */
     private void SaveData() {
+
         DbUtils.UpdateTaskPicState(picName, COMM);  // 更新任务表信息
 
-        DbUtils.SaveLabelsInfo(StrUtils.GetLabelsStr(map), DateUtils.getNowTime()
-                , INPRO, picName, img_url, User.getUser());
+        if (type.equals("图片标签")) {
+            DbUtils.SaveLabelsInfo(StrUtils.GetLabelsStr(map), DateUtils.getNowTime()
+                    , INPRO, picName, img_url, User.getUser());
+        } else if (type.equals("修改标签")) {
+            Log.e(TAG, ":" + DbUtils.UpdateLabelsInfo(StrUtils.GetLabelsStr(map), DateUtils.getNowTime(),
+                    INPRO, User.getUser(), picName));
+        }
 
     }
 }

@@ -7,10 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,8 +39,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private String ctime;
     private String ctimeStr;
     private TextView tv_labels;
-    private ImageView iv_icon;
     private String labels;
+    private TextView tv_picUrl;
+    private String picurl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,20 +86,37 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             tv_time = (TextView) view.findViewById(R.id.tv_history_label_time);
             tv_labels = (TextView) view.findViewById(R.id.tv_history_labels);
-            iv_icon = (ImageView) view.findViewById(R.id.iv_history);
+            tv_picUrl = (TextView) view.findViewById(R.id.tv_picUrl);
 
             labels = tv_labels.getText().toString();
-
+            picurl = tv_picUrl.getText().toString();
             ctimeStr = tv_time.getText().toString();
             ctime = ctimeStr.substring(3, ctimeStr.length());
             if (ctimeStr.substring(0,2).equals("今天")) {
-                Toast.makeText(HistoryActivity.this, labels + "" + ctime + iv_icon.getResources(), Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(HistoryActivity.this, ImageLabelActivity.class);
+                intent.putExtra("img_url", picurl);
+                intent.putExtra("type","修改标签");
+                intent.putExtra("labels",labels);
+                startActivityForResult(intent, 1);
             }
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 2 && requestCode == 1) {
+            if (data.getStringExtra("back").equals("OK")) {
+                initViews();
+            }
+        }
+    }
 
+    /**
+     * 模拟数据
+     * @return
+     */
     private List<HistoryList> getHistoryLists() {
         List<HistoryList> lists = new ArrayList<>();
         lists.add(new HistoryList("","hi爱奇偶及公安", "2012-12-12 12:30", "yes"));

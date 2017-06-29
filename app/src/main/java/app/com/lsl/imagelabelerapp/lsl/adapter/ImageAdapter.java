@@ -89,6 +89,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.BaseViewHold
 
                     Intent intent = new Intent(itemView.getContext(), ImageLabelActivity.class);
                     intent.putExtra("img_url",img_url);
+                    intent.putExtra("type","图片标签");
                     itemView.getContext().startActivity(intent);
 
                 }

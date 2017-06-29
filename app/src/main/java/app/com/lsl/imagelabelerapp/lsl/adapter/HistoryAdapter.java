@@ -33,6 +33,7 @@ public class HistoryAdapter extends BaseAdapter {
     private TextView tv_labels;
     private TextView tv_time;
     private TextView tv_state;
+    private TextView tv_picUrl;
 
     public HistoryAdapter(Context context, List<HistoryList> historyLists) {
         this.context = context;
@@ -65,12 +66,14 @@ public class HistoryAdapter extends BaseAdapter {
             tv_labels = (TextView) convertView.findViewById(R.id.tv_history_labels);
             tv_time = (TextView) convertView.findViewById(R.id.tv_history_label_time);
             tv_state = (TextView) convertView.findViewById(R.id.tv_history_label_state);
+            tv_picUrl = (TextView) convertView.findViewById(R.id.tv_picUrl);
 
             viewHolder = new ViewHolder();
             viewHolder.iv_Pic = iv_pic;
             viewHolder.tv_Labels = tv_labels;
             viewHolder.tv_Time = tv_time;
             viewHolder.tv_State = tv_state;
+            viewHolder.tv_picUrl = tv_picUrl;
 
             convertView.setTag(viewHolder);
         } else {
@@ -91,6 +94,7 @@ public class HistoryAdapter extends BaseAdapter {
                 viewHolder.iv_Pic.setImageBitmap(bitmap);
             }
         });
+        tv_picUrl.setText(list.getIconId());
         viewHolder.tv_Labels.setText("标签：" + list.getPicLabels());
         try {
             if (DateUtils.IsToday(list.getLabelTime())) {
@@ -114,5 +118,6 @@ public class HistoryAdapter extends BaseAdapter {
         TextView tv_Labels;
         TextView tv_Time;
         TextView tv_State;
+        TextView tv_picUrl;
     }
 }

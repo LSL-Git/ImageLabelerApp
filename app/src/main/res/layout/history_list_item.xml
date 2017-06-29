@@ -13,6 +13,12 @@
         android:layout_width="100dp"
         android:layout_height="100dp" />
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_picUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_margin="15dp"
         android:layout_width="0dp"

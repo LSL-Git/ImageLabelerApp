@@ -79,6 +79,25 @@ public class DbUtils {
     }
 
     /**
+     * 更新标签信息表
+     * @param labels
+     * @param cTime
+     * @param State
+     * @param user
+     * @param picName
+     * @return
+     */
+    public static boolean UpdateLabelsInfo(String labels, String cTime, String State,
+                                        String user, String picName) {
+        LabelsTb labelsTb = new LabelsTb();
+        labelsTb.setCommitTime(cTime);
+        labelsTb.setLabels(labels);
+        labelsTb.setLabelState(State);
+        int re = labelsTb.updateAll("picName = ? and User = ?", picName, user);
+        return re > 0;
+    }
+
+    /**
      * 保存图片标签信息
      * @param labels
      * @param cTime
