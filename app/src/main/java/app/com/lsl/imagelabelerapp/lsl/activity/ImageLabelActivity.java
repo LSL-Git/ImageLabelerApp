@@ -559,6 +559,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
         DbUtils.UpdateTaskPicState(picName, COMM);  // 更新任务表信息
 
         if (type.equals("图片标签")) {
+            DbUtils.UpdateImgUrlInfo(picName, 1);
             DbUtils.SaveLabelsInfo(StrUtils.GetLabelsStr(map), DateUtils.getNowTime()
                     , INPRO, picName, img_url, User.getUser());
         } else if (type.equals("修改标签")) {

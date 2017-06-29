@@ -39,6 +39,17 @@ public class DbUtils {
     private static int commit;
 
     /**
+     * 更新其他图片URL的标签信息
+     * @param picName
+     * @param isLabel
+     */
+    public static void UpdateImgUrlInfo(String picName, int isLabel) {
+        ImageURLTable imageURLTable = new ImageURLTable();
+        imageURLTable.setIs_label(isLabel);
+        imageURLTable.updateAll("img_name = ?", picName);
+    }
+
+    /**
      * 获取今日标签的图片信息
      * @param userName
      * @return
