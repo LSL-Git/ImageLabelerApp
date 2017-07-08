@@ -113,7 +113,7 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
 
     @Override
     public void ShowBackMsg(Object obj) {
-        DialogUtil.closeLoadingDialog();
+//        DialogUtil.closeLoadingDialog();
         Log.e(TAG, obj.toString());
         try {
             JSONObject rjson = new JSONObject(obj.toString());

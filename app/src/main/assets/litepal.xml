@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="UserDb"></dbname>
-    <version value="8"></version>
+    <version value="9"></version>
     <!--当version改变时才会更新新增的表-->
     <list>
         <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable"></mapping>
@@ -13,5 +13,6 @@
         <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.AllUserNameTb"/>
         <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.TaskPicUrlTb"/>
         <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.LabelsTb"/>
+        <mapping class="app.com.lsl.imagelabelerapp.lsl.dbtable.BatchTb"/>
     </list>
 </litepal>

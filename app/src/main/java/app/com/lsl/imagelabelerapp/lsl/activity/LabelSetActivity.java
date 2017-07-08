@@ -45,7 +45,7 @@ public class LabelSetActivity extends AppCompatActivity implements UserView ,Vie
 
     @Override
     public void ShowBackMsg(Object obj) {
-        DialogUtil.closeLoadingDialog();
+//        DialogUtil.closeLoadingDialog();
         try {
             JSONObject json = new JSONObject(obj.toString());
             String data = json.getString("result");

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -140,7 +139,7 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void ShowBackMsg(Object obj) {
-        DialogUtil.closeLoadingDialog();
+//        DialogUtil.closeLoadingDialog();
         if (obj.toString().equals("12")) {
             Toast.makeText(AlterPswActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor = spf.edit();

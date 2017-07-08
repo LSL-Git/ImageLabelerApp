@@ -8,6 +8,8 @@ import app.com.lsl.imagelabelerapp.lsl.App.User;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
+import static app.com.lsl.imagelabelerapp.lsl.utils.DbUtils.GetBatch;
+
 /**
  * Created by M1308_000 on 2017/6/21.
  */
@@ -33,11 +35,11 @@ public class GetTask {
      * @return
      */
     public static ArrayList<String> getTaskPicUrl() {
-        list = DbUtils.GetTaskPicUrl("NOP", User.getUser());
+        list = DbUtils.GetTaskPicUrl("NOP", User.getUser(), GetBatch());
         if (list.size() == 0) {
             getMyTask();
             do {
-                list = DbUtils.GetTaskPicUrl("NOP", User.getUser());
+                list = DbUtils.GetTaskPicUrl("NOP", User.getUser(), GetBatch());
             } while (list.size() > 0);
         }
         return list;

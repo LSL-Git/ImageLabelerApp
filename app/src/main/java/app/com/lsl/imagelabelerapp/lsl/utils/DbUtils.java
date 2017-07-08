@@ -15,6 +15,7 @@ import java.util.Map;
 
 import app.com.lsl.imagelabelerapp.R;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.AllUserNameTb;
+import app.com.lsl.imagelabelerapp.lsl.dbtable.BatchTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.ImageURLTable;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.LabelsTb;
 import app.com.lsl.imagelabelerapp.lsl.dbtable.PicFileTable;
@@ -38,6 +39,37 @@ public class DbUtils {
     private static String picPath ;
     private static int nop;
     private static int commit;
+
+    /**
+     * 获取当前编号
+     * @return
+     */
+    public static int GetBatch() {
+        List<BatchTb> list = DataSupport.select("batch").find(BatchTb.class);
+        int re = 0;
+        for (BatchTb b : list) {
+            re = b.getBatch();
+        }
+        return re;
+    }
+
+    /**
+     * 保存当前批次号
+     * @param batch
+     */
+    public static void SaveToDayBatch(int batch) {
+        BatchTb tb = new BatchTb();
+        List<BatchTb> list = DataSupport.select("batch").find(BatchTb.class);
+        if (list.size() == 0) {
+            tb.setBatch(batch);
+            if (tb.save())
+                Log.e(TAG, "batch save success");
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("batch", batch);
+            DataSupport.updateAll(BatchTb.class, values);
+        }
+    }
 
     /**
      * 更新其他图片URL的标签信息
@@ -142,9 +174,9 @@ public class DbUtils {
      * @param userName
      * @return
      */
-    public static String GetTaskState(String userName) {
+    public static String GetTaskState(String userName, int batch) {
         Cursor cursor = DataSupport.findBySQL("select COUNT(State) as nop from TaskPicUrlTb " +
-                "where State = '" + NOP + "' and user = '" + userName + "'");
+                "where State = '" + NOP + "' and user = '" + userName + "' and batch = " + batch);
         if (0 < cursor.getCount()) {
             while(cursor.moveToNext()) {
                 nop = cursor.getInt(cursor.getColumnIndex("nop"));
@@ -152,7 +184,7 @@ public class DbUtils {
         }
 
         Cursor cursor2 = DataSupport.findBySQL("select COUNT(State) as comm from TaskPicUrlTb " +
-                "where State = '" + COMM + "' and user = '" + userName + "'");
+                "where State = '" + COMM + "' and user = '" + userName + "' and batch = " + batch);
         if (0 < cursor2.getCount()) {
             while(cursor2.moveToNext()) {
                 commit = cursor2.getInt(cursor2.getColumnIndex("comm"));
@@ -182,10 +214,10 @@ public class DbUtils {
      * @param State
      * @return
      */
-    public static ArrayList<String> GetTaskPicUrl(String State, String userName) {
+    public static ArrayList<String> GetTaskPicUrl(String State, String userName, int batch) {
         ArrayList<String> list = new ArrayList<>();
         Cursor cursor = DataSupport.findBySQL("select picUrl from TaskPicUrlTb where State = '" + State
-                + "' and user = '" + userName + "'");
+                + "' and user = '" + userName + "' and batch = " + batch);
 
         if (cursor.getCount() > 0) {
             while(cursor.moveToNext()) {
@@ -214,7 +246,9 @@ public class DbUtils {
             , String state, String nowTime, String userName) {
         TaskPicUrlTb picUrlTb = new TaskPicUrlTb();
         Cursor cursor = DataSupport.findBySQL("select picName,batch from TaskPicUrlTb " +
-                "where picName = '" + picName + "'" + " and user = '" + userName + "'");
+                "where picName = '" + picName + "'" + " and user = '" + userName + "'" +
+                " and batch = " + batch);
+        SaveToDayBatch(batch);
         if (cursor.getCount() == 0) {
             picUrlTb.setPicName(picName);
             picUrlTb.setPicUrl(picUrl);
@@ -222,6 +256,7 @@ public class DbUtils {
             picUrlTb.setState(state);
             picUrlTb.setUser(userName);
             picUrlTb.setGetTaskTime(nowTime);
+
             if (picUrlTb.save())
                 Log.e(TAG, "task pic url save success!");
         }
