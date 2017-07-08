@@ -24,6 +24,7 @@ public class GetTask {
         String TYPE = "images";
         Map<String, String> map = new HashMap<>();
         map.put("type", "GetTaskPicUrl");
+        map.put("userName",User.getUser());
         new Thread(new HttpUtils(map, TYPE)).start();
     }
 
@@ -34,6 +35,7 @@ public class GetTask {
     public static ArrayList<String> getTaskPicUrl() {
         list = DbUtils.GetTaskPicUrl("NOP", User.getUser());
         if (list.size() == 0) {
+            getMyTask();
             do {
                 list = DbUtils.GetTaskPicUrl("NOP", User.getUser());
             } while (list.size() > 0);

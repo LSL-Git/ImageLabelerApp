@@ -8,8 +8,9 @@ public class User {
 
     private static String User;
 
-    public static void setUser(String user) {
+    public static boolean setUser(String user) {
         User  = user;
+        return User.equals(user);
     }
 
     public static String getUser() {

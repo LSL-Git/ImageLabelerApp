@@ -1,5 +1,7 @@
 package app.com.lsl.imagelabelerapp.lsl.utils;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,23 @@ public class JsonUtils {
     public static final String NOP = "NOP";
 
     /**
+     * 更新图片状态
+     * @param obj
+     * @param count
+     * @throws JSONException
+     */
+    public static void UpdateUnfinishedState(JSONObject obj, int count) throws JSONException {
+        for (int i = 0; i < count; i++) {
+            JSONObject json = obj.getJSONObject("img" + i);
+            String picName = json.getString("img_name");
+            int picState = json.getInt("state");
+//            Log.e(TAG, picName + " : " + picState);
+
+            DbUtils.UpdateImgUrlInfo(picName, picState);
+        }
+    }
+
+    /**
      * 解析任务图片信息
      * @param data
      * @throws JSONException
@@ -34,6 +53,7 @@ public class JsonUtils {
 //            Log.e(TAG, "name:" + picName);
 //            Log.e(TAG, "url:" + picUrl);
 //            Log.e(TAG,"batch:" + batch);
+//            Log.e(TAG, User.getUser());
             DbUtils.SaveTaskPicInfo(picName, picUrl, batch, NOP,DateUtils.getNowTime(), User.getUser());
         }
 

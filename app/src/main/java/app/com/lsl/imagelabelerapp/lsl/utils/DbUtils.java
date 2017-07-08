@@ -1,5 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.utils;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -44,9 +45,10 @@ public class DbUtils {
      * @param isLabel
      */
     public static void UpdateImgUrlInfo(String picName, int isLabel) {
-        ImageURLTable imageURLTable = new ImageURLTable();
-        imageURLTable.setIs_label(isLabel);
-        imageURLTable.updateAll("img_name = ?", picName);
+        ContentValues values = new ContentValues();
+        values.put("is_label",isLabel);
+        int row = DataSupport.updateAll(ImageURLTable.class, values, "img_name = ?", picName);
+//        Log.e(TAG, "update " + row + " item");
     }
 
     /**
@@ -544,7 +546,7 @@ public class DbUtils {
                 urlTable.setImg_name(json.getString("img_name"));
                 urlTable.setImg_url(json.getString("imgUrl"));
                 urlTable.setUpload_time(json.getString("upload_time"));
-                urlTable.setIs_label(0);
+                urlTable.setIs_label(json.getInt("state"));
                 if (urlTable.save()) {
                     Log.e("DbUtils", "url save success");
                 }

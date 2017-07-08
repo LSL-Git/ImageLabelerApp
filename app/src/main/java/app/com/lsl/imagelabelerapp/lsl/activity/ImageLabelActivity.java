@@ -530,17 +530,18 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void ShowBackMsg(Object obj) {
-        DialogUtil.closeLoadingDialog();
+
         try {
             String result = JsonUtils.LoginAndRegisterJson(obj.toString());
             if (result.equals("OK")) {
                 Toast.makeText(ImageLabelActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+//                DialogUtil.closeLoadingDialog();
 
                 Intent intent = new Intent();
                 intent.putExtra("back", "OK");
                 setResult(2, intent);
 
-                SaveData();
+                SaveData(); // 保存相关数据
                 finish();
             } else {
                 Toast.makeText(ImageLabelActivity.this, "提交失败", Toast.LENGTH_SHORT).show();

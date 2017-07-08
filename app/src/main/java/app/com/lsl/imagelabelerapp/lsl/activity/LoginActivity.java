@@ -206,9 +206,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             JSONObject object = new JSONObject(obj.toString());
             int num = object.getInt("num");
-            if (num > 0)
+            if (num > 0) {
                 // 将图片的URL保存数据库
                 DbUtils.SaveImgUrl(object, num);
+                JsonUtils.UpdateUnfinishedState(object, num);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,13 +232,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.commit();
             }
 
-            User.setUser(user_name);// 设置全局用户名
-
-            // 登录成功，跳转到主页面
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("user_name",user_name);
-            this.startActivity(intent);
-            finish();
+            if (User.setUser(user_name)) { // 设置全局用户名
+                // 登录成功，跳转到主页面
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("user_name", user_name);
+                this.startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "登录出错！", Toast.LENGTH_SHORT).show();
+            }
 
         } else if (RESULT.equals("Psw_Err")){// 密码错误
             DialogUtil.closeLoadingDialog();

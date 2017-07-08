@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onBoomWillShow() {
-                snackbar = Snackbar.make(bmb,"今日完成 " + DbUtils.GetTaskState(getUser()), Snackbar.LENGTH_INDEFINITE);
+                snackbar = Snackbar.make(bmb,"今日T完成 " + DbUtils.GetTaskState(getUser()), Snackbar.LENGTH_INDEFINITE);
                 snackbar.show();
                 snackbar.setActionTextColor(Color.parseColor("#00FF00"));
                 snackbar.setAction("查看", new View.OnClickListener() {
