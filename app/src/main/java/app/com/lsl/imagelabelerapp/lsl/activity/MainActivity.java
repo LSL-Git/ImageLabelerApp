@@ -49,6 +49,7 @@ import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
 import app.com.lsl.imagelabelerapp.lsl.config.ProperTies;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
+import app.com.lsl.imagelabelerapp.lsl.utils.DialogUtil;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
 
 import static app.com.lsl.imagelabelerapp.lsl.App.User.getUser;
@@ -359,11 +360,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void ShowLoading() {
-
+        DialogUtil.showLoadingDialog(MainActivity.this, "拼命加载中...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
+        DialogUtil.closeLoadingDialog(MainActivity.this);
         SaveUserInfo(obj.toString());
         ShowUserInfo();
     }
