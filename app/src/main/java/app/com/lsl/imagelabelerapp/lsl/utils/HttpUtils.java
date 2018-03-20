@@ -18,8 +18,11 @@ import java.util.Map;
 
 public class HttpUtils implements Runnable{
     private String TAG = "HttpUtils";
-    // 服务器地址
-    String urlPath = "http://114.115.141.43:4040/webServer/";
+    // 云服务器地址
+//    String urlPath = "http://193.112.17.51:8080/webServer/";
+
+    // 本地服务器地址
+    String urlPath = "http://192.168.1.100:8088/webServer/";
     // 返回码
     int code;
 

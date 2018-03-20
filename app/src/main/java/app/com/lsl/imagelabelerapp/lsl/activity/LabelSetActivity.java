@@ -35,17 +35,17 @@ public class LabelSetActivity extends AppCompatActivity implements UserView ,Vie
     private EditText et_taskNum;
     private EditText et_relyNum;
     private TextView tv_setInfo;
-    private static final String TYPE = "LabelSetServlet";
+    private static final String TYPE = "LabelsSetServlet";
     private TopMenuHeader topMenuHeader;
 
     @Override
     public void ShowLoading() {
-        DialogUtil.showLoadingDialog(LabelSetActivity.this, "loading...", true);
+        DialogUtil.showLoadingDialog(LabelSetActivity.this, "加载中...", true);
     }
 
     @Override
     public void ShowBackMsg(Object obj) {
-//        DialogUtil.closeLoadingDialog();
+        DialogUtil.closeLoadingDialog(LabelSetActivity.this);
         try {
             JSONObject json = new JSONObject(obj.toString());
             String data = json.getString("result");

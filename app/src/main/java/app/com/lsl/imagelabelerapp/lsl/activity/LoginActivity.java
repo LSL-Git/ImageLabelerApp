@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 加载控件 和相关数据
         initLayout();
 
-        spf = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
+        spf = this.getSharedPreferences(SPF_USERINFO, Context.MODE_PRIVATE);
 
         // 判断记住密码多选框的状态
         if (spf.getBoolean(IS_REMEMBER,false)) {
@@ -205,7 +205,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             JSONObject object = new JSONObject(obj.toString());
+
             int num = object.getInt("num");
+            Log.e(">>><<<<<<<<<<<<<", num + ":" + object);
             if (num > 0) {
                 // 将图片的URL保存数据库
                 DbUtils.SaveImgUrl(object, num);
@@ -233,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
             if (User.setUser(user_name)) { // 设置全局用户名
+                DialogUtil.closeLoadingDialog(LoginActivity.this);
                 // 登录成功，跳转到主页面
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("user_name", user_name);
@@ -243,13 +246,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
         } else if (RESULT.equals("Psw_Err")){// 密码错误
-            DialogUtil.closeLoadingDialog();
+            DialogUtil.closeLoadingDialog(this);
             tv_show_login_msg.setText("密码错误");
         } else if (RESULT.equals("User_Not_Exist")) {// 用户不存在
-            DialogUtil.closeLoadingDialog();
+            DialogUtil.closeLoadingDialog(this);
             tv_show_login_msg.setText("用户名不存在.");
         } else if (RESULT.equals("Login_Fail")){    // 登录失败
-            DialogUtil.closeLoadingDialog();
+            DialogUtil.closeLoadingDialog(this);
             tv_show_login_msg.setText("登录失败");
         }
     }

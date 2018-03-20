@@ -141,6 +141,7 @@ public class AlterPswActivity extends AppCompatActivity implements View.OnClickL
     public void ShowBackMsg(Object obj) {
 //        DialogUtil.closeLoadingDialog();
         if (obj.toString().equals("12")) {
+            DialogUtil.closeLoadingDialog(AlterPswActivity.this);
             Toast.makeText(AlterPswActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor = spf.edit();
             editor.putString(PASSWORD, in_new_psw);

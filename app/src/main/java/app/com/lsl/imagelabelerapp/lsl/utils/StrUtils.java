@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
+
 /** 字符串工具类
  * Created by M1308_000 on 2017/4/29.
  */
@@ -68,7 +70,7 @@ public class StrUtils {
      * @return
      */
     public static ArrayList<String> GetPicUrl(String fileName, String filePath){
-        String url = "http://114.115.141.43:4040/webServer/LoadImage/Images/已完成";
+        String url = MyApplication.getServerUrl() + "LoadImage/Images/已完成";
         ArrayList<String> list = new ArrayList<>();
         List<String> picNameList = DbUtils.GetPicName(fileName);
         for (int i = 0; i < picNameList.size(); i++) {

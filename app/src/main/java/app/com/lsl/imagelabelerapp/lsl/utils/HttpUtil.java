@@ -9,6 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
+import app.com.lsl.imagelabelerapp.lsl.App.User;
+import app.com.lsl.imagelabelerapp.lsl.activity.MainActivity;
 import app.com.lsl.imagelabelerapp.lsl.model.UserModel;
 
 /** http请求方式
@@ -18,9 +21,11 @@ import app.com.lsl.imagelabelerapp.lsl.model.UserModel;
 public class HttpUtil implements UserModel {
     DataLoadOnListener listener;
     // 云服务器地址
-    String urlPath = "http://114.115.141.43:4040/webServer/";
+//    String urlPath = "http://193.112.17.51:8080/webServer/";
 
-//    String urlPath = "http://192.168.1.101/webServer/";
+    // 本地服务器地址
+    String urlPath = "http://192.168.1.100:8088/webServer/";
+
     @Override
     public void loadData(final Map<String, String> map, final String Type, final DataLoadOnListener listener) {
         urlPath += Type;

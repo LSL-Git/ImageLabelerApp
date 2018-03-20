@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:textColor="@color/write"
-        android:background="@drawable/but_bg2"
-        android:layout_marginTop="10dp"
-        android:id="@+id/but_export_label_result"
-        android:text="导出标签化结果"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<Button-->
+        <!--android:textColor="@color/write"-->
+        <!--android:background="@drawable/but_bg2"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:id="@+id/but_export_label_result"-->
+        <!--android:text="导出标签化结果"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 
     <Button
         android:textColor="@color/write"

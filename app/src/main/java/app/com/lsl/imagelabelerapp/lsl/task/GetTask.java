@@ -23,7 +23,7 @@ public class GetTask {
      */
     public static void getMyTask() {
         // 获取图片URL列表
-        String TYPE = "images";
+        String TYPE = "GetTaskPicUrlServlet";
         Map<String, String> map = new HashMap<>();
         map.put("type", "GetTaskPicUrl");
         map.put("userName",User.getUser());

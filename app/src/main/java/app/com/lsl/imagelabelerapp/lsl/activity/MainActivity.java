@@ -1,11 +1,13 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -37,11 +39,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import app.com.lsl.imagelabelerapp.R;
+import app.com.lsl.imagelabelerapp.lsl.App.MyApplication;
 import app.com.lsl.imagelabelerapp.lsl.activity.view.UserView;
 import app.com.lsl.imagelabelerapp.lsl.adapter.ImageAdapter;
 import app.com.lsl.imagelabelerapp.lsl.base.Base64Image;
+import app.com.lsl.imagelabelerapp.lsl.config.ProperTies;
 import app.com.lsl.imagelabelerapp.lsl.presenter.UserPresenter;
 import app.com.lsl.imagelabelerapp.lsl.utils.DbUtils;
 import app.com.lsl.imagelabelerapp.lsl.utils.HttpUtils;
@@ -92,6 +97,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        String properties = ProperTies.getProperties(getApplicationContext()).getProperty("serverUrl");
+//        Log.e("?>>>>>>>>>>>>>>>>>>>>>>", MyApplication.getServerUrl());
        // 加载控件
         initLayout();
 
@@ -192,7 +199,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         // 找到头像id 并设置点击监听
         headerView = navigationView.getHeaderView(0);
-
+        Log.e("Main",GetImgUrl() + "");
         ShowImages(GetImgUrl());// 根据图片资源列表改变图片内容
 
         iv_user_icon = (ImageView) headerView.findViewById(R.id.iv_user_icon);
@@ -226,7 +233,7 @@ public class MainActivity extends AppCompatActivity
         // 获取用户名
         Intent intent = getIntent();
         user_name = intent.getStringExtra("user_name");
-        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
+        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_PRIVATE);
         // 根据用户名请求用户的所有信息
         String TYPE = "userinfo";
         Map<String,String> map = new HashMap<>();
@@ -405,12 +412,14 @@ public class MainActivity extends AppCompatActivity
             }
             editor.putString(USER_LABEL_ALL_NUM, json.getString(USER_LABEL_ALL_NUM));
             editor.putString(USER_LABEL_SUCCESS_NUM, json.getString(USER_LABEL_SUCCESS_NUM));
-            editor.commit();
+            boolean r = editor.commit();
+            Log.e("SaveUserInfo", r + "");
 
             Base64Image.GenerateImage(json.getString(USER_ICON_CODE),USER_ICON_PATH + json.getString(USER_ICON));
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("SaveUserInfo", e.getMessage());
         }
     }
 

@@ -57,7 +57,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
         tv_about = (TextView) findViewById(R.id.tv_about);
         tv_manager = (TextView) findViewById(R.id.tv_manager);
         ll_manager = (LinearLayout) findViewById(R.id.ll_manager);
-        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
+        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_PRIVATE);
 
         if (spf.getBoolean(IS_MANAGER, false)) {
             ll_manager.setVisibility(View.VISIBLE);
@@ -101,7 +101,7 @@ public class SetActivity extends AppCompatActivity implements View.OnClickListen
                 this.startActivity(intent);
                 break;
             case R.id.but_exit_acc:
-                SharedPreferences spf = getSharedPreferences(SPF_USERINFO, Context.MODE_WORLD_READABLE);
+                SharedPreferences spf = getSharedPreferences(SPF_USERINFO, Context.MODE_PRIVATE);
                 spf.edit().putBoolean(AUTO_LOGIN, false).commit();
                 MyApplication.quitApp();    // 移除所有后台活动
                 intent = new Intent(SetActivity.this, LoginActivity.class);

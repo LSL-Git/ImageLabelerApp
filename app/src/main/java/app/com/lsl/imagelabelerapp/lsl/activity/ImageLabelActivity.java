@@ -534,6 +534,7 @@ public class ImageLabelActivity extends AppCompatActivity implements View.OnClic
         try {
             String result = JsonUtils.LoginAndRegisterJson(obj.toString());
             if (result.equals("OK")) {
+                DialogUtil.closeLoadingDialog(ImageLabelActivity.this);
                 Toast.makeText(ImageLabelActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
 //                DialogUtil.closeLoadingDialog();
 

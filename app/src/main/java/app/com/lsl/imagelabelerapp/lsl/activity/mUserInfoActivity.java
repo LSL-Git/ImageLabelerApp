@@ -108,7 +108,7 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
 
     @Override
     public void ShowLoading() {
-        DialogUtil.showLoadingDialog(mUserInfoActivity.this, "loading...",true);
+        DialogUtil.showLoadingDialog(mUserInfoActivity.this, "加载中...",true);
     }
 
     @Override
@@ -144,6 +144,9 @@ public class mUserInfoActivity extends AppCompatActivity implements UserView , V
                 tv_userGrantSess.setText("授权管理员  " + "YES");
             } else {
                 tv_userGrantSess.setText("授权管理员  " + "NO");
+            }
+            if (json != null) {
+                DialogUtil.closeLoadingDialog(mUserInfoActivity.this);
             }
         } catch (JSONException e) {
             e.printStackTrace();

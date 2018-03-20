@@ -1,6 +1,12 @@
 package app.com.lsl.imagelabelerapp;
 
+import android.content.Context;
+
 import org.junit.Test;
+
+import java.util.Properties;
+
+import app.com.lsl.imagelabelerapp.lsl.config.ProperTies;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +18,5 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
     }
 }

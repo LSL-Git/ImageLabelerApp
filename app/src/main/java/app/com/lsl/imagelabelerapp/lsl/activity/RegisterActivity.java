@@ -118,14 +118,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (result.equals("User_Name_Exist")) {  // 用户名已存在
-            DialogUtil.closeLoadingDialog();
+            DialogUtil.closeLoadingDialog(this);
             tv_show_msg.setText("用户名已存在");
         } else if (result.equals("Register_Success")) { // 注册成功
+            DialogUtil.closeLoadingDialog(this);
             // 注册成功。跳转到登录页面
             finish();
             Toast.makeText(RegisterActivity.this,"注册成功", Toast.LENGTH_SHORT).show();
         } else {    // 注册失败
-            DialogUtil.closeLoadingDialog();
+            DialogUtil.closeLoadingDialog(this);
             tv_show_msg.setText("注册失败");
         }
     }

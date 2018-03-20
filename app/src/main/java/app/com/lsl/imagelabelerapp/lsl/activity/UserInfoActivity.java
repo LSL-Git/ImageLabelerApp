@@ -1,5 +1,6 @@
 package app.com.lsl.imagelabelerapp.lsl.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -92,7 +93,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
 
 
         // 从spf文件中读取用户信息并显示出来
-        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_WORLD_READABLE);
+        spf = getSharedPreferences(SPF_USERALLINFO, Context.MODE_PRIVATE);
         if (spf != null) {
             tv_info_name.setText("昵称   " + spf.getString(USER_NAME, ""));
             tv_info_tel.setText(spf.getString(USER_TEL, ""));
@@ -182,7 +183,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void ShowBackMsg(Object obj) {
-        DialogUtil.closeLoadingDialog();
+        DialogUtil.closeLoadingDialog(this);
         try {
             if (JsonUtils.LoginAndRegisterJson(obj.toString()).equals("Update_Success")) {
                 SharedPreferences.Editor editor = spf.edit();

@@ -569,26 +569,34 @@ public class DbUtils {
      * @param num
      * @throws Exception
      */
-    public static void SaveImgUrl(JSONObject object, int num) throws Exception{
-        for (int i = 0; i < num; i++) {
-            JSONObject json = object.getJSONObject("img" + i);
+    public static void SaveImgUrl(JSONObject object, int num) {
+        try {
+            for (int i = 0; i < num; i++) {
+                JSONObject json = object.getJSONObject("img" + i);
 
-            ImageURLTable urlTable = new ImageURLTable();
-            List<ImageURLTable> urlTables = DataSupport.select("img_url").
-                    where("img_name = ?",json.getString("img_name")).find(ImageURLTable.class); // 判断是否存在相同条目
-            if (urlTables.size() == 0) {
-                urlTable.setImg_id(i);
-                urlTable.setImg_name(json.getString("img_name"));
-                urlTable.setImg_url(json.getString("imgUrl"));
-                urlTable.setUpload_time(json.getString("upload_time"));
-                urlTable.setIs_label(json.getInt("state"));
-                if (urlTable.save()) {
-                    Log.e("DbUtils", "url save success");
+                ImageURLTable urlTable = new ImageURLTable();
+                List<ImageURLTable> urlTables = DataSupport.select("img_url").
+                        where("img_name = ?",json.getString("img_name")).find(ImageURLTable.class); // 判断是否存在相同条目
+//                Log.e("SaveImgUrl",urlTables.size() + "+++" + num);
+                if (urlTables.size() == 0) {
+                    urlTable.setImg_id(i);
+                    urlTable.setImg_name(json.getString("img_name"));
+                    urlTable.setImg_url(json.getString("imgUrl"));
+                    urlTable.setUpload_time(json.getString("upload_time"));
+                    urlTable.setIs_label(json.getInt("state"));
+                    if (urlTable.save()) {
+                        Log.e("DbUtils", "url save success");
+                    } else {
+                        Log.e("DbUtils", "url save failed");
+                    }
+                } else {
+                    Log.e("DbUtils", "data is exist");
                 }
-            } else {
-                //Log.e("DbUtils", "data is exist");
             }
+        } catch (Exception e) {
+            Log.e("SaveUrl", e.getMessage());
         }
+
     }
 
     /**
